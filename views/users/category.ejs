@@ -1,0 +1,94 @@
+
+  <main id="main">
+    <section>
+      <div class="container" style="word-break:break-all;">
+        <div class="row">
+          <div class="col-md-9" data-aos="fade-up">
+            <h3 class="category-title">All Blogs</h3>
+            <% result.forEach((data,index)=>{%>
+          <div class="d-md-flex post-entry-2 half border-top border-bottom custom-border ">
+              <a href="/read_blog/<%=data._id%> " class="me-4 thumbnail">
+                <img <%if(typeof data.blog_img[0] !== 'undefined'){%>src="data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%>"<%}else{%>src="/assets/img/post-landscape-6.jpg"<%}%>  alt="" class="img-fluid">
+              </a>
+              <div>
+                <div class="post-meta"><span class="date"><%=data.category%> </span> <span class="mx-1">&bullet;</span> <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()%>  </span></div>
+                <h3><a href="/read_blog/<%=data._id%> "><%=data.title%> </a></h3>
+                <p><%=data.content %></p>
+                <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="/assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0"><%=data.author_id.username %> </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%}) %> 
+  
+            <!-- <div class="text-start py-4">
+              <div class="custom-pagination">
+                <a href="#" class="prev">Prevous</a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#" class="next">Next</a>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="col-md-3">
+            <!-- ======= Sidebar ======= -->
+            <div class="aside-block">
+
+             
+
+            <div class="aside-block">
+              <h3 class="aside-title">Video</h3>
+              <div class="video-post">
+                <a href="https://youtu.be/Ct6BUPvE2sM" class="glightbox link-video">
+                  <span class="bi-play-fill"></span>
+                  <img src="/assets/img/post-landscape-5.jpg" alt="" class="img-fluid">
+                </a>
+              </div>
+            </div><!-- End Video -->
+
+            <div class="aside-block">
+              <h3 class="aside-title">Categories</h3>
+              <ul class="aside-links list-unstyled">
+                <li><a href="/category/travel"><i class="bi bi-chevron-right"></i> Travel</a></li>
+              <li><a href="/category/culture"><i class="bi bi-chevron-right"></i> Culture</a></li>
+              <li><a href="/category/sport"><i class="bi bi-chevron-right"></i> Sport</a></li>
+              <li><a href="/category/food"><i class="bi bi-chevron-right"></i> Food</a></li>
+              <li><a href="/category/space"><i class="bi bi-chevron-right"></i> Space</a></li>
+              <li><a href="/category/cars"><i class="bi bi-chevron-right"></i> Cars</a></li>
+              <li><a href="/category/startups"><i class="bi bi-chevron-right"></i> Startups</a></li>
+              <li><a href="/category/tech"><i class="bi bi-chevron-right"></i> Tech</a></li>
+              <li><a href="/category/global"><i class="bi bi-chevron-right"></i> Global</a></li>
+              </ul>
+            </div><!-- End Categories -->
+
+            <div class="aside-block">
+              <h3 class="aside-title">Tags</h3>
+              <ul class="aside-tags list-unstyled">
+                <li><a href="/category/travel"> Travel</a></li>
+                <li><a href="/category/culture"> Culture</a></li>
+                <li><a href="/category/sport"> Sport</a></li>
+                <li><a href="/category/food"> Food</a></li>
+                <li><a href="/category/space"> Space</a></li>
+                <li><a href="/category/cars"> Cars</a></li>
+                <li><a href="/category/startups"> Startups</a></li>
+                <li><a href="/category/tech"> Tech</a></li>
+                <li><a href="/category/global"> Global</a></li>
+              </ul>
+            </div><!-- End Tags -->
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -1,0 +1,81 @@
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a href="index.html" class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1>BloggY</h1>
+    </a>
+
+    <nav id="navbar" class="navbar text-light">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li class="dropdown"><a href="category.html"><span>Categories</span> <i
+              class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <ul>
+            <li><a href="/category/all-blogs">All Blogs</a></li>
+            <li><a href="/category/Travel">Travel</a></li>
+            <li><a href="/category/Culture">Culture</a></li>
+            <li><a href="/category/Sport">Sport</a></li>
+            <li><a href="/category/Food">Food</a></li>
+            <li><a href="/category/Space">Space</a></li>
+            <li><a href="/category/Cars">Cars</a></li>
+            <li><a href="/category/Startups">Startups</a></li>
+            <li><a href="/category/Tech">Tech</a></li>
+            <li><a href="/category/Global">Global</a></li>
+          </ul>
+        </li>
+        <li><a href="https://rzp.io/l/JXhH7NTv8">Support Us</a></li>
+        <% if(typeof userActive !== 'undefined'){%>
+            <%if(typeof userActive.username !== 'undefined'){%>
+          
+          <li><a href="/favorites/<%=userActive.id %> ">Favorites</a></li>
+        <li class="dropdown"><a class=""><i class="bi bi-person-fill"></i> <span class="ps-2"><%=userActive.username%></span> <i
+              class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <ul>
+            <li><a href="/profile/<%=userActive.id%> ">Visit Profile</a></li>
+            <li><a href="/create_blog">Create Blog</a></li>
+            <li><a onclick="return window.confirm('Are you sure you want to signout ?')" href="/signout">Signout</a></li>
+          </ul>
+        </li>
+        <%}else{%>
+        <li class="dropdown"><a class=""><span class="">Get Started</span> <i
+              class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <ul>
+            <li><a class="mx-auto text-light  bg-dark w-75" href="/signup">Get Started</a></li>
+            <li><a class="mx-auto w-75" href="/signin">Sign In</a></li>
+          </ul>
+        </li>
+        <%} %>
+          <%}else{%>
+            <li class="dropdown"><a class=""><span class="">Get Started</span> <i
+                  class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <ul>
+                <li><a class="mx-auto text-light  bg-dark w-75" href="/signup">Get Started</a></li>
+                <li><a class="mx-auto w-75" href="/signin">Sign In</a></li>
+              </ul>
+            </li>
+            <%} %> 
+      
+      </ul>
+    </nav><!-- .navbar -->
+
+    <div class="position-relative">
+
+      <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+
+      <!-- ======= Search Form ======= -->
+      <div class="search-form-wrap js-search-form-wrap">
+        <form action="/search/" name="searchform" class="search-form">
+          <span role="button" onclick="searchform.submit()" class="icon bi-search"></span>
+          <input name="search" type="text" placeholder="Search" class="form-control">
+          <button class="btn js-search-close"><span class="bi-x"></span></button>
+        </form>
+      </div><!-- End Search Form -->
+
+    </div>
+
+  </div>
+
+</header>

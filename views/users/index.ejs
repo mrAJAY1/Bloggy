@@ -1,0 +1,158 @@
+<main id="main">
+
+  <!-- ======= Hero Slider Section ======= -->
+  <section id="hero-slider" class="hero-slider">
+    <div class="container-md" data-aos="fade-in">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="swiper sliderFeaturedPosts">
+            <div class="swiper-wrapper">
+              <%if (typeof featured !== 'undefined'){%>
+              <% featured.forEach((data,index)=>{%>
+              <div class="swiper-slide">
+                <a href="/read_blog/<%=data._id%> " class="img-bg d-flex align-items-end"
+                  <%if(data.blog_img[0]!=='undefined'){%>
+                  style="background-image: url('data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%>');"
+                  <%}else{%> style="background-image: url('assets/img/post-slide-1.jpg');" <%} %>>
+                  <div class="img-bg-inner">
+                    <h2><%=data.title %> </h2>
+                    <p><%=data.author_id.username%> </p>
+                  </div>
+                </a>
+              </div>
+              <%}) %>
+              <%} %>
+            </div>
+            <div class="custom-swiper-button-next">
+              <span class="bi-chevron-right"></span>
+            </div>
+            <div class="custom-swiper-button-prev">
+              <span class="bi-chevron-left"></span>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Hero Slider Section -->
+  <section class="category-index p-0">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <div class="aside-block">
+          <ul class="aside-tags list-unstyled">
+            <li class="pe-5">
+              <h3 class="aside-title">Tags</h3>
+            </li>
+            <li><a href="/category/all-blogs">All Blogs</a></li>
+            <li><a href="/category/Travel">Travel</a></li>
+            <li><a href="/category/Culture">Culture</a></li>
+            <li><a href="/category/Sport">Sport</a></li>
+            <li><a href="/category/Food">Food</a></li>
+            <li><a href="/category/Space">Space</a></li>
+            <li><a href="/category/Cars">Cars</a></li>
+            <li><a href="/category/Startups">Startups</a></li>
+            <li><a href="/category/Tech">Tech</a></li>
+            <li><a href="/category/Global">Global</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- ======= Post Grid Section ======= -->
+  <section id="posts" class="posts" style="word-wrap: break-word;">
+    <div class="container" data-aos="fade-up">
+      <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Latest</h2>
+        <div><a href="category.html" class="more">See All Blogs</a></div>
+      </div>
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <% if(typeof blogPrime !== 'undefined'){%>
+          <% blogPrime.forEach((data,index)=>{%>
+          <div class="post-entry-1 lg" style="max-height: 500px;">
+            <a href="/read_blog/<%=data._id%>"><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
+              data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
+              <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
+            <div class="post-meta"><span class="date"><%=data.category%></span><span class="mx-1">&bullet;</span>
+              <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()+1%></span>
+            </div>
+            <h2><a href="/read_blog/<%=data.id%>"><%=data.title%> </a></h2>
+            <p  class="mb-4 d-block"><%=data.content%></p>
+            <div class="d-flex align-items-center author mb-3">
+              <div class="photo"><img src="assets/img/person-1.jpg" alt="" class="img-fluid"></div>
+              <div class="name">
+                <h3 class="m-0 p-0"><%=data.author_id.username%> </h3>
+              </div>
+            </div>
+            
+          </div>
+          <%}) %>
+          <%} %>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row g-5">
+            <div class="col-lg-4 border-start custom-border">
+              <% if(typeof blogSecond !== 'undefined'){%>
+              <%blogSecond.forEach((data,index)=>{%>
+              <div class="post-entry-1 mb-5">
+                <a href="/read_blog/<%=data._id%> "><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
+                  data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
+                  <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
+                <div class="post-meta"><span class="date"><%=data.category%></span> <span class="mx-1">&bullet;</span>
+                  <span><%=data.createdAt.getDate()%>/ <%=data.createdAt.getMonth()+1%></span>
+                </div>
+                <h2><a href="single-post.html"><%=data.title%></a></h2>
+              </div>
+              <%}) %>
+              <%} %>
+            </div>
+            <div class="col-lg-4 border-start custom-border">
+              <% if(typeof blogThird !== 'undefined'){%>
+              <%blogThird.forEach((data,index)=>{%>
+              <div class="post-entry-1 mb-5">
+                <a href="/read_blog/<%=data._id%> "><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
+                    data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
+                    <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
+                <div class="post-meta"><span class="date"><%=data.category%></span> <span class="mx-1">&bullet;</span>
+                  <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()+1%></span>
+                </div>
+                <h2><a href="single-post.html"><%=data.title%> </a></h2>
+              </div>
+              <%}) %>
+              <%} %>
+            </div>
+
+            <!-- Trending Section -->
+            <div class="col-lg-4" style="flex-flow: column;overflow-y:auto">
+              <div class="trending">
+                <h3>Trending</h3>
+                <ul class="trending-post">
+                  <% if(typeof trending !== 'undefined'){%>
+                  <% trending.forEach((data,index)=>{%>
+                  <li>
+                    <a href="/read_blog/<%=data._id%> ">
+                      <span class="number"><%=index+1 %></span>
+                      <h3><%=data.title%> </h3>
+                      <span class="author"><%=data.author_id.username %> </span>
+                    </a>
+                  </li>
+                  <%}) %>
+                  <%} %>
+                </ul>
+              </div>
+            </div> <!-- End Trending Section -->
+          </div>
+        </div>
+      </div> <!-- End .row -->
+    </div>
+  </section> <!-- End Post Grid Section -->
+
+
+</main><!-- End #main -->
+
+
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

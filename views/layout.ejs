@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Bloggy</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="" rel="icon">
+    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+      integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <!-- Vendor CSS Files -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.2.3/swiper-bundle.css"
+      integrity="sha512-RDcDPFl1DiFz9e6nlScN4c+whvchUuQa920d9c00e4i48rWxOQDOcto24nztQz1By9hBfSI7TU6EpFXRv8HJcg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Template Main CSS Files -->
+    <link href="/assets/css/variables.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <% if(typeof access !=='number'){ %>
+    <%-include('partials/user-header.ejs') %>
+    <% } %>
+
+    <%-body-%>
+
+    <% if(typeof access !=='number'){ %>
+    <%-include('partials/footer.ejs') %>
+    <% } %>
+    <!-- Vendor JS Files -->
+    <!-- JavaScript Bundle with Popper -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.2.3/swiper-bundle.min.js"
+      integrity="sha512-d3gZ3Oo0k2qZ8HJ3JNdmqH/YHjFj3qYaS7HQBhF6P6ohVKpCnUy3KovWTv0V9UBkO9Auo1uhPsIzNE5I4C/CpQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+      integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!-- Template Main JS File -->
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+      $(window).ready(function () {
+        $('.likes').on('click', function () {
+          const id = ($(this).attr('value'))
+          $.ajax({
+            type: 'GET',
+            url: `/like/${id}`,
+          }).done((result) => {
+            if (!result.session) window.alert('please sign in to continue');
+            else {
+             
+              if(result.result.status){
+                $(this).find('.likes-count').html(result.result.likeLength[0].likelength)
+                $(this).find('.like-icon').removeClass('bi-heart').addClass('bi-heart-fill').addClass('text-danger')
+                
+              }else{
+                $(this).find('.likes-count').html(result.result.likeLength[0].likelength)
+                $(this).find('.like-icon').removeClass('bi-heart-fill').removeClass('text-danger').addClass('bi-heart')
+              }
+            }
+          })
+        })
+        $('.fav').on('click', function () {
+          const id = ($(this).attr('value'))
+          $.ajax({
+            type: 'GET',
+            url: `/fav/${id}`,
+          }).done((result) => {
+            if (!result.session) window.alert('please sign in to continue');
+            else {
+              if(result.fav){
+               
+                $(this).find('.fav-icon').removeClass('bi-bookmark-heart').addClass('bi-bookmark-heart-fill').addClass('text-warning')
+                
+              }else{
+                $(this).find('.fav-icon').removeClass('bi-bookmark-heart-fill').removeClass('text-warning').addClass('bi-bookmark-heart')
+              }
+            }
+          })
+        })
+      })
+    </script>
+  </body>
+
+</html>

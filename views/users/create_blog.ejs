@@ -1,0 +1,125 @@
+<main id="main" class="pb-md-5">
+    <section id="contact" class="contact mb-5">
+        <div class="container" data-aos="fade-up">
+            <% if(typeof blogData.title !== 'undefined'){%>
+                
+                <div class="row">
+                <div class="col-lg-12 text-center mb-5"> 
+                    <h1 class="page-title">Edit Blog</h1>
+                </div>
+            </div>
+
+
+
+            <div class="form mt-5">
+                <form id="create-form" action="/update_blog/<%=blogData._id %> " method="post" role="form" enctype="multipart/form-data"
+                    class="php-email-form">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input type="text" value="<%=blogData.title%> " name="title" class="form-control" id="title" placeholder="Title"
+                                required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <select name="category" class="form-select" aria-label="Default select example">
+                                <option selected value="<%=blogData.category%> "><%=blogData.category%> </option>
+                                <option value="Cars">Cars</option>
+                                <option value="space">Space</option>
+                                <option value="culture">Culture</option>
+                                <option value="tech">Tech</option>
+                                <option value="global">Global</option>
+                                <option value="Sport">Sport</option>
+                                <option value="Cars">Food</option>
+                                <option value="space">Startups</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" value="<%=blogData.description %> " class="form-control" name="description" id="description"
+                            placeholder="Description" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="content" rows="5" placeholder="Content"
+                            required><%=blogData.content %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Example file input</label>
+                        <input multiple type="file" name="blogImage" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your Blog has been sent to Admin and it will be published once it is
+                            approved . thank you!</div>
+                    </div>
+                    <div id="submit-form" role="button" class="text-center"><button type="submit">submit</button></div>
+                </form>
+            </div>
+                
+                <%}else{%>
+                    
+                    
+                <div class="row">
+                    <div class="col-lg-12 text-center mb-5"> 
+                        <h1 class="page-title">Create Blog</h1>
+                    </div>
+                </div>
+    
+    
+    
+                <div class="form mt-5">
+                    <form id="create-form" action="/create_blog" method="post" role="form" enctype="multipart/form-data"
+                        class="php-email-form">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="text" name="title" class="form-control" id="title" placeholder="Title"
+                                    required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <select name="category" class="form-select" aria-label="Default select example">
+                                    <option value="Global" selected>Global</option>
+                                    <option value="Cars">Cars</option>
+                                    <option value="space">Space</option>
+                                    <option value="culture">Culture</option>
+                                    <option value="tech">Tech</option>
+                                    <option value="global">Global</option>
+                                    <option value="Sport">Sport</option>
+                                    <option value="Cars">Food</option>
+                                    <option value="space">Startups</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="description" id="description"
+                                placeholder="Description" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="content" rows="5" placeholder="Content"
+                                required></textarea>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Example file input</label>
+                            <input multiple type="file" maxlength="2" name="blogImage" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your Blog has been sent to Admin and it will be published once it is
+                                approved . thank you!</div>
+                        </div>
+                        <div id="submit-form" role="button" class="text-center"><button type="submit">submit</button></div>
+                    </form>
+                </div><%} %> 
+            
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+<script>
+
+</script>

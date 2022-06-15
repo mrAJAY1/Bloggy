@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker:wght@600&family=Irish+Grover&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+
+body,
+html {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.navbar {
+  font-size: 1.5rem;
+  font-family: 'Blinker', sans-serif;
+
+}
+
+#signup-btn-home {
+  color: rgba(0, 107, 255, 1);
+
+
+}
+
+@media (min-width:1400px) {
+  #signup-btn-home {
+    box-sizing: border-box;
+    background-color: rgba(0, 107, 255, 1);
+    border-radius: 25px;
+    color: white;
+    padding: 1vh 1vw !important;
+  }
+
+}
+
+@media (max-width:1399px) {
+  .nav-item {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .navbar-collapse {
+    position: absolute;
+    right: 6%;
+    top: 70%;
+    background: rgba(0, 0, 0, 0.514);
+    border-radius: 5px;
+    width: 90%;
+
+  }
+  .nav-link{
+    color: white !important;
+  }
+
+}
+
+.img-fluid {
+  width: 20rem;
+}
+
+#homeIntro h1 {
+  letter-spacing: .7vw;
+  line-height: 5rem;
+}
+
+.search {
+  width: 100%;
+  height: 4.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: inline-flex;
+
+  background: #FFFFFF;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.44);
+
+}
+
+::placeholder {
+  font-family: 'Blinker', sans-serif;
+}
+
+.search input {
+  width: 80%;
+  height: 90%;
+  margin: auto 0;
+  border: none;
+  font-size: 1.8rem;
+  outline: none;
+}
+
+.search button {
+  border: none;
+  background: transparent;
+}
+.search button img{
+  height: 25px;
+}
+.featured {
+  height: 300px;
+  width: 300px;
+  background-color: yellow;
+  border: 1px solid;
+}
+
+.signup-p1 {
+  background: rgba(86, 230, 239, 0.92);
+  height: 100%;
+  width: 50%;
+}
+
+.signup-page {
+  width: 1400px;
+  height: 700px;
+  display: flex;
+}
+
+.signup-p1 h1 {
+  font-family: 'Irish Grover', cursive;
+  font-size: 3rem;
+}
+
+.signup-p1 .img2 {
+  width: 450px;
+}
+
+.signup-p2 {
+  background: black;
+  height: 100%;
+  width: 50%;
+}
+
+.form-control {
+  height: 3rem;
+  border: 2px solid rgba(255, 162, 53, 1) !important;
+}
+
+.form-control:focus {
+  box-shadow: 1px 1px 1px 3px orange !important;
+
+}
+
+.form-signin {
+  height: 4rem;
+}
+
+

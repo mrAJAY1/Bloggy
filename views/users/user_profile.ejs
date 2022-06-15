@@ -1,0 +1,201 @@
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .donations {
+    font-family: 'Blinker',
+      sans-serif;
+    text-decoration: none !important;
+    color: rgb(0, 0, 0);
+    font-size:
+      25px;
+    text-shadow: none;
+    transition: box-shadow ease 0.2s;
+    transition:
+      font-size ease-in-out 0.2s;
+  }
+
+  .donations:hover {
+    color: rgba(0, 0, 0);
+    font-size: 26px;
+    border-radius: 5px;
+    text-shadow: none;
+  }
+
+  .profile-pic {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+  }
+
+
+  .circle {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    width:
+      128px;
+    height: 128px;
+    border: 8px solid rgba(255, 255, 255, 0.7);
+    top: 72px;
+  }
+
+   .circle img {
+      max-width: 100%;
+      height: 100%;
+    }
+
+
+  .read-more {
+    height: 30%;
+    width: 100%;
+    background-color: rgba(255, 255, 255,
+        0.7);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255,
+        0.25);
+  }
+
+  .read-more a {
+    text-decoration: none;
+    margin-left: 20px;
+  }
+
+  .read-more h3 {
+    font-size: 15px;
+    color: black;
+    font-weight: bolder;
+    font-family:
+      'Blinker', sans-serif;
+  }
+
+  .read-more button {
+    background: transparent;
+    border:
+      0;
+    outline: 0;
+  }
+
+  .preview-card {
+    max-width: 1000px;
+    margin-top: 50px;
+    border:
+      0;
+    transition: box-shadow ease-in 0.5s;
+    transition: -moz-box-shadow ease-in 0.5s;
+    transition: -webkit-box-shadow ease-in 0.5s;
+    transition: transform ease-in 250ms;
+  }
+
+  .preview-card:hover {
+    -webkit-box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+    -moz-box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+    box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+    transform:
+      translateY(-10px);
+  }
+
+  .card-img {
+    max-width: 100%;
+    height: 100%;
+    object-fit:
+      cover;
+    transition: max-width ease-in-out 0.3s;
+    transition: height ease-in-out 0.8s;
+  }
+
+  .card-img:hover {
+    max-width: 100%;
+    height: 150%;
+  }
+
+  #like {
+    font-size: 35px;
+  }
+
+  .reactions {
+    width: 50%;
+  }
+</style>
+
+<body>
+  <section>
+    <div class="container">
+
+      <div class="row d-flex pt-3">
+        <div class="col-6 text-start">
+          <a class="me-auto mb-3" href="/"><img width="40" src="/images/eva_arrow-ios-back-fill.png" alt="" /></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-5 col-md-2 d-flex">
+          <div style="position: relative;">
+            <div class="circle">
+              <!-- User Profile Image -->
+              <img class="profile-pic" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile.png"
+                alt="Profile Image" />
+            </div>
+            <h3 class="text-center mb-5"><%=userData.name%></h3>  
+          </div>
+        </div>
+      </div>
+      <% blogData.forEach(function(data){ %>
+        <a href="/read_blog/<%=data._id%> ">
+          <div class="card btn preview-card">
+            <div class="row d-flex m-0">
+              <div style=" height: 300px;width: 40%; padding: 0; overflow: hidden;">
+                <div class="" style="height: 100%; width:100%;">
+                  <img class="card-img" <% if(typeof data.blog_img[0]!=='undefined' ){%>src="data:
+                  <%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> " <%} %>
+                        class="rounded-start" alt=".image" />
+
+                </div>
+              </div>
+              <div class="card-body" style="height:300px;width: 60%;">
+                <div style="width: 100%; height: 100%; text-overflow: ellipsis; overflow: hidden; position: relative;">
+
+                  <h5 class="card-title text-center">
+                    <%=data.title %>
+                  </h5>
+                  <p class="card-text" style="line-height: 30px;">
+                    <%=data.description %>
+                  </p>
+                  <p class="card-text"><small class="text-muted">Last Edited
+                      on
+                    </small></p>
+                  <div class="d-flex align-items-center read-more">
+                    <div class="reactions">
+                      <button id="like" class="text" onclick="liked()">
+                        <i class="fa-regular fa-heart"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <% }) %>
+
+
+
+    </div>
+    </div>
+
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script>
+
+
+
+  </script>
+</body>

@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.donations {
+  font-family: 'Blinker', sans-serif;
+  text-decoration: none !important;
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  text-shadow: none;
+  transition: box-shadow ease 0.2s;
+  transition: font-size ease-in-out 0.2s;
+}
+
+.donations:hover {
+  color: rgba(0, 0, 0);
+  font-size: 26px;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+img {
+  max-width: 100%;
+  height: 100%;
+}
+
+
+.read-more {
+  height: 30%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.read-more a {
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.read-more h3 {
+  font-size: 15px;
+  color: black;
+  font-weight: bolder;
+  font-family: 'Blinker', sans-serif;
+}
+
+.read-more button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.preview-card {
+  margin-top: 50px;
+  border: 0;
+  transition: box-shadow ease-in 0.5s;
+  transition: -moz-box-shadow ease-in 0.5s;
+  transition: -webkit-box-shadow ease-in 0.5s;
+  transition: transform ease-in 250ms;
+}
+
+.preview-card:hover {
+  -webkit-box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+  -moz-box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+  box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+  transform: translateY(-10px);
+}
+
+.card-img {
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: max-width ease-in-out 0.3s;
+  transition: height ease-in-out 0.8s;
+}
+
+.card-img:hover {
+  max-width: 100%;
+  height: 150%;
+}
+
+.edit-img {
+  width: 40px;
+  transition: transform 0.4s;
+}
+
+.edit-img:hover {
+  transform: scale(1.2);
+}
+
+.delete-img {
+  width: 40px;
+  transition: transform 0.4s;
+}
+
+.delete-img:hover {
+  transform: scale(1.2);
+}
+
+#like {
+  font-size: 35px;
+}
+
+.reactions {
+  width: 50%;
+}
+
+.blog-controls {
+  width: 50%;
+}
+
+.create-btn {
+  border-radius: 5px;
+  width: 70px;
+  padding: auto 0;
+  margin-right: 30px;
+  background-color: transparent;
+  padding-top: 3px;
+  transition: transform ease 0.4s;
+}
+
+.create-btn:hover {
+  transform: scale(1.2);
+}
+
+.logout-btn {
+  font-size: 25px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}

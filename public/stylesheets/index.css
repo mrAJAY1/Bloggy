@@ -1,0 +1,73 @@
+
+
+.read-more {
+    height: 30%;
+    width: 100%;
+    background-color: rgba(255, 255, 255,
+        0.7);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255,
+        0.25);
+  }
+
+  .read-more a {
+    text-decoration: none;
+    margin-left: 20px;
+  }
+
+  .read-more h3 {
+    font-size: 15px;
+    color: black;
+    font-weight: bolder;
+    font-family:
+      'Blinker', sans-serif;
+  }
+
+  .read-more button {
+    border:
+      0;
+    outline: 0;
+  }
+
+  .preview-card {
+    max-width: 1300px;
+    margin-top: 50px;
+    border:
+      0;
+    transition: box-shadow ease-in 0.5s;
+    transition: -moz-box-shadow ease-in 0.5s;
+    transition: -webkit-box-shadow ease-in 0.5s;
+    transition: transform ease-in 250ms;
+  }
+
+  .preview-card:hover {
+    cursor: default;
+    -webkit-box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+    -moz-box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+    box-shadow: 2px 1px 10px -1px rgba(0, 0, 0, 0.219);
+    transform:
+      translateY(-10px);
+  }
+
+  .card-img {
+    max-width: 100%;
+    height: 100%;
+    object-fit:
+      cover;
+    transition: max-width ease-in-out 0.3s;
+    transition: height ease-in-out 0.8s;
+  }
+
+  .card-img:hover {
+    max-width: 100%;
+    height: 150%;
+  }
+  
+  .linkedText{
+    transition: cursor ease 0.5px;
+  }
+  .linkedText :hover{
+    cursor: pointer !important;
+  }

@@ -1,0 +1,276 @@
+<style>
+  body {
+    background-color: #eee;
+  }
+</style>
+<section>
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">BloggY</p>
+
+                <form action="/signup" method="post" class="mx-1 mx-md-4">
+
+                  <div class="d-flex flex-row align-items-center mb-2">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="name" id="name" placeholder="name..." required class="form-control" <%
+                        if(errorData.name)%>value="<%=errorData.name%>" <% %> />
+                          <label  id="name-label" class="form-label text-danger d-none" for="name">
+                            Thats a funny name...But not allowed here
+                          </label>
+                    </div>
+                  </div>
+
+
+
+                  <div class="d-flex flex-row align-items-center mb-2">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="email" name="email" id="email" placeholder="Email..." required
+                        value="<%=errorData.email%>" class="form-control" />
+                      <% if (emailErr){ %>
+                      <label class="form-label text-danger" for="email">
+                        <%=emailErr %>
+                      </label>
+                      <% } %>
+                      <label id="email-label" class="form-label d-none text-danger" for="email">
+                        Be truthfull,that email doesn't even exists...
+                      </label>
+
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-2">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="username" placeholder="username..." id="username" required minlength="4"
+                        value="<%=errorData.username%>" class="form-control" />
+                      <% if(usernameErr){%>
+
+                      <label class="form-label  text-danger" for="username">
+                        <%=usernameErr %>
+                      </label>
+                      <%} %>
+
+                      <label id="username-label" class="form-label d-none  text-danger" for="username">
+                        Provide a username
+                      </label>
+
+                    </div>
+                  </div>
+
+
+                  <div class="d-flex flex-row align-items-center mb-2">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="password" name="password" title="" id="password" required placeholder="Password..."
+                        class="form-control" />
+                      <label class="form-label text-danger d-none" id="password-label" for="password">
+                        <ul>
+                          <li>password must be 5 - 8 charecters long</li>
+                          <li>must have atleast one numeric and special character</li>
+                        </ul>
+                      </label>
+                    </div>
+                  </div>
+
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline d-flex flex-fill mb-0">
+                      <select name="country" class="form-control me-auto ps-3 d-flex" style="width: 40%;" id="country">
+                        <option selected value="India">India</option>
+                      </select>
+                      <label class="form-label" for="country"></label>
+                      <select name="state" id="state" class="form-control ms-auto ps-3 d-flex" style="width: 40%;">
+                        <option id="no-state"></option>
+                      </select>
+                      <label class="form-label text-danger d-none" id="state-lable" for="state">Select your
+                        State</label>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button style="background: rgba(255, 162, 53, 1); border-radius:25px; width: 10rem;" type="submit"
+                      class="btn" onclick(return validateform())>Signup</button>
+                  </div>
+
+                </form>
+
+                <!-- <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button style="background: white; border-radius:25px; border: 1px solid black;" type="submit"
+                      class="btn"><img width="20" class="me-2" src="/images/google.png" alt="">Signup with Google</button>
+                  </div> -- -->
+                <p class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">Already have an account ? <a
+                    style="text-decoration: none;" href="/signin">Sign In</a></p>
+
+              </div>
+              <div style="background:rgba(86, 230, 239, 0.92);border-radius: 25px;"
+                class="col-md-10  d-none d-lg-block  col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                <img src="/images/Left side.png" width="400" class=" ms-5 ms-lg-2 ms-xl-5" alt=" image">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js"
+  integrity="sha512-FOhq9HThdn7ltbK8abmGn60A/EMtEzIzv1rvuh+DqzJtSGq8BRdEN0U+j0iKEIffiw/yEtVuladk6rsG4X6Uqg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  function preventBack() {
+    window.history.forward()
+  }
+  setTimeout("preventBack()", 0)
+  window.onunload = function () { null }
+  $(document).ready(function () {
+    let err;
+    $('#name').on('focusout', function () {
+      const name = $('#name').val()
+      const letters = /^[A-Za-z]+$/
+      if (name == '' || !name.match(letters) || name.length < 3) {
+        $('#name-label').removeClass('d-none')
+        err = true;
+      }
+      else {
+        $('#name-label').addClass('d-none')
+        err = false
+      }
+    })
+    $('#email').on('focusout', function () {
+      const name = $('#email').val()
+      const letters = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      if (name == '' || !name.match(letters)) {
+        $('#email-label').removeClass('d-none')
+        err = true;
+      }
+      else {
+        $('#email-label').addClass('d-none')
+        err = false
+      }
+    })
+    $('#username').on('focusout', function () {
+      const name = $('#username').val()
+      if (name == '' || name.length < 4) {
+        $('#username-label').removeClass('d-none')
+        err = true;
+      }
+      else {
+        $('#username-label').addClass('d-none')
+        err = false
+      }
+    })
+
+    $('#password').on('focusout', function () {
+      const name = $('#password').val()
+      const letter = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{5,8}$/
+      if (name == '' || name.length < 4 || !name.match(letter)) {
+        $('#password-label').removeClass('d-none')
+        err = true;
+      }
+      else {
+        $('#password-label').addClass('d-none')
+        err = false
+      }
+    })
+
+
+    const ctry = $('#country').val()
+    if (ctry == 'India') {
+      let state = ["<option value = 'Andhra Pradesh'>Andhra Pradesh</option>",
+        "<option value = 'Arunachal Pradesh'>Arunachal Pradesh</option>",
+        "<option value = 'Assam'>Assam</option>",
+
+        "<option value ='Bihar'>Bihar</option>",
+        "<option value ='Chhattisgarh'>Chhattisgarh</option>",
+        "<option value ='Goa'>Goa</option>",
+        "<option value ='Gujarat'>Gujarat</option>",
+        "<option value ='Haryana'>Haryana</option>",
+        "<option value ='Himachal Pradesh'>Himachal Pradesh</option>",
+        "<option value ='Jammu and Kashmir'>Jammu and Kashmir</option>",
+        "<option value ='Jharkhand'>Jharkhand</option>",
+        "<option value ='Karnataka'>Karnataka</option>",
+        "<option value ='Kerala'>Kerala</option>",
+        "<option value ='Madhya Pradesh'>Madhya Pradesh</option>",
+        "<option value ='Maharashtra'>Maharashtra</option>",
+        "<option value ='Manipur'>Manipur</option>",
+        "<option value ='Meghalaya'>Meghalaya</option>",
+        "<option value ='Mizoram'>Mizoram</option>",
+        "<option value ='Nagaland'>Nagaland</option>",
+        "<option value ='Odisha'>Odisha</option>",
+        "<option value ='Punjab'>Punjab</option>",
+        "<option value ='Rajasthan'>Rajasthan</option>",
+        "<option value ='Sikkim'>Sikkim</option>",
+        "<option value ='Tamil Nadu'>Tamil Nadu</option>",
+        "<option value ='Telangana'>Telangana</option>",
+        "<option value ='Tripura'>Tripura</option>",
+        "<option value ='Uttarakhand'>Uttarakhand</option>",
+        "<option value ='Uttar Pradesh'>Uttar Pradesh</option>",
+        "<option value ='West Bengal'>West Bengal</option>",
+        "<option value ='Andaman and Nicobar Islands'>Andaman and Nicobar Islands</option>",
+        "<option value ='Chandigarh'>Chandigarh</option>",
+        "<option value ='Dadra and Nagar Haveli'>Dadra and Nagar Haveli</option>",
+        "<option value ='Daman and Diu'>Daman and Diu</option>",
+        "<option value ='Delhi'>Delhi</option>",
+        "<option value ='Lakshadweep'>Lakshadweep</option>",
+        "<option value ='Puducherry'>Puducherry</option>"]
+      for (let i = 0; i < state.length; i += 1) {
+        $('#no-state').after(state[i])
+      }
+    }
+
+    function validateform() {
+      let noErr = true;
+      const name = $('#name').val()
+      const email = $('#email').val()
+      const username = $('#username').val()
+      const password = $('#password').val()
+      const state = $('#state').val()
+      const letters = /^[A-Za-z]+$/
+      const emailletter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      const passwordletter = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{5,8}$/
+
+
+
+
+      if (name == '' || !name.match(letters) || name.length < 3) {
+        $('#name-label').removeClass('d-none')
+        noErr = false;
+      }
+
+
+      if (email == '' || !name.match(emailletters)) {
+        $('#email-label').removeClass('d-none')
+        noErr = false;
+      }
+      if (username == '' || name.length < 4) {
+        $('#username-label').removeClass('d-none')
+        noErr = false;
+      }
+
+      if (password == '' || password.length < 4 || !password.match(passwordletter)) {
+        $('#password-label').removeClass('d-none')
+        noErr = false;
+      }
+      if(state ==''){
+        $('#state-label').removeClass('d-none')
+        noErr = false;
+      }
+      return noErr;
+    }
+  })
+
+</script>
+;
