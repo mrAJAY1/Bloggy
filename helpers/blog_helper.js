@@ -63,7 +63,7 @@ module.exports = {
   findLatest: async (id) => {
     const result = await BlogModel.find({ $nor: [{ 'author_id.id': id }] })
       .sort({ createdAt: -1 })
-      .limit(7)
+      .limit(5)
       .lean();
     return result;
   },
@@ -88,7 +88,7 @@ module.exports = {
       {
         $sort: { likes: -1, createdAt: -1 },
       },
-      { $limit: 7 },
+      { $limit: 5 },
     ]);
 
     return result;

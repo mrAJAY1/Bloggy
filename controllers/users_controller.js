@@ -17,8 +17,8 @@ module.exports = {
     const featured = await blogHelper.findFeatured();
     const trending = await blogHelper.findTrending();
     const blogPrime = result.slice(0, 1);
-    const blogSecond = result.slice(1, 4);
-    const blogThird = result.slice(4);
+    const blogSecond = result.slice(1, 3);
+    const blogThird = result.slice(3);
 
     res.render('users/index', {
       userActive,
