@@ -65,13 +65,13 @@
     <div class="container" data-aos="fade-up">
       <div class="section-header d-flex justify-content-between align-items-center mb-5">
         <h2>Latest</h2>
-        <div><a href="category.html" class="more">See All Blogs</a></div>
+        <div><a href="/category/all-blogs" class="more">See All Blogs</a></div>
       </div>
       <div class="row g-5">
         <div class="col-lg-4">
           <% if(typeof blogPrime !== 'undefined'){%>
           <% blogPrime.forEach((data,index)=>{%>
-          <div class="post-entry-1 lg" style="max-height: 500px;">
+          <div class="post-entry-1 lg">
             <a href="/read_blog/<%=data._id%>"><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
               data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
               <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
