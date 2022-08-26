@@ -46,6 +46,10 @@ section {
   overflow: hidden;
 }
 
+.single-post{
+  word-break: break-all;
+}
+
 .section-header {
   border-bottom: 2px solid var(--color-black);
 }
