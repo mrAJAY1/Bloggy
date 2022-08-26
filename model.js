@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema(
     },
     favorites:[{
      blogId: {
-      type:String
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'blogs'
     }
     }
      ],
@@ -116,6 +117,6 @@ const blogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Blog = mongoose.model('Blog', blogSchema);
+const Blog = mongoose.model('blogs', blogSchema);
 
 module.exports = { User, Blog };

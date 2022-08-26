@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 
+const { ObjectId } = require('mongodb');
 const userHelper = require('../helpers/user_helper');
 const blogHelper = require('../helpers/blog_helper');
 
@@ -281,14 +282,15 @@ module.exports = {
         if (dt.userId === userId) liked = true;
       });
       const fav = user.favorites;
-
       // eslint-disable-next-line array-callback-return
       fav.some((favList) => {
-        if (favList.blogId === blogId) {
+        // eslint-disable-next-line eqeqeq
+        if (favList.blogId.toString() === blogId) {
           faved = true;
         }
       });
     }
+    console.log(faved);
     res.render('users/read_blog', { userActive, slicedContent, liked, faved });
     faved = false;
     liked = false;
@@ -310,11 +312,11 @@ module.exports = {
     else res.send({ fav: false, session: req.session.userId });
   },
   getFavorites: async (req, res) => {
-    res.redirect('/');
-    // }
-    // const data =req.params.id;
-    // const result = await userHelper.findFavorites(data);
-    // res.render('users/favorites',{result,userActive})
+    // res.redirect('/');
+    
+    const data =req.params.id;
+    const result = await userHelper.findFavorites(data);
+    res.render('users/favorites',{result,userActive})
   },
   search: async (req, res) => {
     const result = await blogHelper.search(req.query.search);
