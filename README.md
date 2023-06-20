@@ -1,5 +1,5 @@
 # Bloggy
-
+## [View Live](https://bloggy.ml/)
 Bloggy is a community blogging website where you can create, read and react to blogs. It is a perfect platform to share your knowledge and opinions to 
 readers. 
 
