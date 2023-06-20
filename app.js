@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 
 const db = mongoose.connection;
 
-mongoose.connect('mongodb://localhost:27017/Bloggy');
+mongoose.connect('mongodb+srv://ajayprakash:socialmedia@cluster0.fo34uzm.mongodb.net/?retryWrites=true&w=majority');
 
 // eslint-disable-next-line no-console
 db.on('error', console.error.bind(console, 'connection error: '));

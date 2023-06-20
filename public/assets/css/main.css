@@ -46,6 +46,10 @@ section {
   overflow: hidden;
 }
 
+.single-post{
+  word-break: break-all;
+}
+
 .section-header {
   border-bottom: 2px solid var(--color-black);
 }
@@ -510,6 +514,14 @@ section {
   top: -20px;
   font-weight: 700;
   color: rgba(var(--color-black-rgb), 0.05);
+}
+.trending .trending-post li a .title {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-line-clamp: 5;
 }
 .trending .trending-post li a h3 {
   font-size: 18px;

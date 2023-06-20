@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
 
 const UserModel = require('../model').User;
 
@@ -59,11 +60,12 @@ module.exports = {
           _id: userId,
         },
         {
-          'favorites.blogId': id,
+          'favorites.blogId': ObjectId(id),
         },
       ],
     });
-    const data = { blogId: id };
+    const data = { blogId: ObjectId(id) };
+    console.log(result)
     if (!result) {
       await UserModel.findOneAndUpdate(
         { _id: userId },
@@ -77,28 +79,33 @@ module.exports = {
     );
     return false;
   },
-  // findFavorites: async (id) => {
-  //   const result = await UserModel.aggregate([
-  //     {
-  //       $match: { _id: ObjectId(id) },
-  //     },
-  //     {
-  //       $unwind:'$favorites',
+  findFavorites: async (id) => {
+    const result = await UserModel.aggregate([
+      {
+        $match: { _id: ObjectId(id) },
+      },
+      {
+        $unwind:{
+          path:'$favorites'
+        },
+      },
+      {
+        $lookup: {
+          from: 'blogs',
+          localField:'favorites.blogId',
+          foreignField:"_id",
+          as:'favorites.favorites'
+        }
+      },
+      {
+        $unwind:{
+          path:"$favorites.favorites"
+        }
+      }
+    ]);
 
-  //     },
-  //     {
-  //       $lookup:{
-  //         from:'Blog',
-  //         localField:'favorites.blogId',
-  //         foreignField:'_id',
-  //         as:'favorites'
-  //       },
-       
-  //     } 
-  //   ]);
-  //   console.log(result);
-  //   return result;
-  // },
+    return result;
+  },
   isBlocked:async (id)=>{
     const result = await UserModel.findOne({_id:id,status:{$ne:"active"}})
     return result;
