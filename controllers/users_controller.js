@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
-
-const { ObjectId } = require('mongodb');
+const cloudinary = require('cloudinary').v2;
 const userHelper = require('../helpers/user_helper');
 const blogHelper = require('../helpers/blog_helper');
 
@@ -140,56 +139,92 @@ module.exports = {
       }
     }
   },
-  getBlogCreate: async(req, res) => {
-    const signed = req.session.userSignedIn
-    if(!signed)res.redirect('/')
-    const isBlocked = await userHelper.isBlocked(signed._id)
-    if(!isBlocked)
+  getBlogCreate: async (req, res) => {
+    const signed = req.session.userSignedIn;
+    if (!signed) res.redirect('/');
+    const isBlocked = await userHelper.isBlocked(signed._id);
+    if (!isBlocked)
       res.render('users/create_blog', { blogData: 0, userActive });
     else res.redirect('/');
   },
   postCreate: async (req, res) => {
-    const signed = req.session.userSignedIn
-    if(!signed)res.redirect('/')
-    const isBlocked = await userHelper.isBlocked(signed._id)
-    if(!isBlocked){
-
+    const signed = req.session.userSignedIn;
+    if (!signed) res.redirect('/');
+    const isBlocked = await userHelper.isBlocked(signed._id);
+    if (!isBlocked) {
       const { files } = req;
 
-    const authorData = req.session.userSignedIn;
-    const finalData = req.body;
-    finalData.author_id = {
-      id: authorData._id,
-      username: authorData.username,
-    };
-
-    // converrt image into base 64 encoding
-    const imgArray = await files.map((file) => {
-      const img = fs.readFileSync(file.path);
-      const encodeImage = img.toString('base64');
-      return encodeImage;
-    });
-    const finalImg = [];
-    await imgArray.map((src, index) => {
-      const result = finalImg.push({
-        filename: files[index].originalname,
-        contentType: files[index].mimetype,
-        imageBase64: src,
+      const authorData = req.session.userSignedIn;
+      const finalData = req.body;
+      finalData.author_id = {
+        id: authorData._id,
+        username: authorData.username,
+      };
+      const imageUpload = files.map((file) => {
+        // Use the uploaded file's name as the asset's public ID and
+        // allow overwriting the asset with new versions
+        const options = {
+          use_filename: true,
+          unique_filename: false,
+          overwrite: true,
+        };
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload(file.path, options, (error, result) => {
+            if (error) reject(error);
+            else resolve(result.url);
+          });
+        });
       });
-      return result;
-    });
-    finalData.blog_img = finalImg;
-    try {
-      await blogHelper.createBlog(finalData);
-      res.redirect(`/profile/${authorData._id}`);
-    } catch (error) {
-      console.log(error);
-      req.flash('blogUploadError', error);
-    }
-    }else{
+
+      const uploadedImages = await Promise.all(imageUpload);
+      console.log(uploadedImages);
+      finalData.blog_img = uploadedImages;
+
+      // const uploadImage = async (imagePath) => {
+      //   // Use the uploaded file's name as the asset's public ID and
+      //   // allow overwriting the asset with new versions
+      //   const options = {
+      //     use_filename: true,
+      //     unique_filename: false,
+      //     overwrite: true,
+      //   };
+
+      //   try {
+      //     // Upload the image
+      //     const result = await cloudinary.uploader.upload(imagePath, options);
+      //     console.log(result);
+      //     return result.public_id;
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // };
+
+      // // converrt image into base 64 encoding
+      // const imgArray = await files.map((file) => {
+      //   const img = fs.readFileSync(file.path);
+      //   const encodeImage = img.toString('base64');
+      //   return encodeImage;
+      // });
+      // const finalImg = [];
+      // await imgArray.map((src, index) => {
+      //   const result = finalImg.push({
+      //     filename: files[index].originalname,
+      //     contentType: files[index].mimetype,
+      //     imageBase64: src,
+      //   });
+      //   return result;
+      // });
+      // finalData.blog_img = finalImg;
+      try {
+        await blogHelper.createBlog(finalData);
+        res.redirect(`/profile/${authorData._id}`);
+      } catch (error) {
+        console.log(error);
+        req.flash('blogUploadError', error);
+      }
+    } else {
       res.redirect('/');
     }
-    
   },
   getCategory: async (req, res) => {
     const result = await blogHelper.findByCategory(req.params.id);
@@ -313,10 +348,10 @@ module.exports = {
   },
   getFavorites: async (req, res) => {
     // res.redirect('/');
-    
-    const data =req.params.id;
+
+    const data = req.params.id;
     const result = await userHelper.findFavorites(data);
-    res.render('users/favorites',{result,userActive})
+    res.render('users/favorites', { result, userActive });
   },
   search: async (req, res) => {
     const result = await blogHelper.search(req.query.search);

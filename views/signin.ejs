@@ -1,112 +1,153 @@
-<section class="vh-100" style="background-color: #eee;">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12  col-xl-11">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="card-body p-md-5">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+<section
+  class="vh-100"
+  style="background-color: #eee"
+>
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div
+          class="card text-black"
+          style="border-radius: 25px"
+        >
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  BloggY
+                </p>
 
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">BloggY</p>
+                <form
+                  action="/signin"
+                  method="post"
+                  id="signinform"
+                  name="signinform"
+                  class="mx-1 mx-md-4"
+                >
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="signInValue" id="signInValue"
+                      class="form-control form-signin" placeholder="Username or email..." 
+                      <%= errorData.signInValue ?
+                      `value=${errorData.signInValue}` : '' %> /> <%
+                      if(errMessage){%>
+                      <label
+                        class="form-label text-danger"
+                        for="signInValue"
+                      >
+                        <%=errMessage%>
+                      </label>
 
-                                <form action="/signin" method="post" id="signinform" name="signinform"
-                                    class="mx-1 mx-md-4">
+                      <%} %>
+                    </div>
+                  </div>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" name="signInValue" id="signInValue"
-                                                placeholder="Username or email..." <% if(errorData.signInValue){%>
-                                                value="<%=errorData.signInValue%>" <%} %>
-                                                class="form-control form-signin" />
-                                            <% if(errMessage){%>
-                                            <label class="form-label text-danger" for="signInValue">
-                                                <%=errMessage%>
-                                            </label>
+                  <div class="d-flex flex-row align-items-center mb-5">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Password..."
+                        class="form-control form-signin"
+                      />
+                      <% if(errMessage){%>
+                      <label
+                        class="form-label text-danger"
+                        for="password"
+                      >
+                        <%=errMessage %>
+                      </label>
+                      <%} %>
+                    </div>
+                  </div>
 
-                                            <%} %>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-5">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="password" name="password" id="password"
-                                                placeholder="Password..." class="form-control form-signin" />
-                                            <% if(errMessage){%>
-                                            <label class="form-label text-danger" for="password">
-                                                <%=errMessage %>
-                                            </label>
-                                            <%} %>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button
-                                            style="background: rgba(255, 162, 53, 1); border-radius:25px; width: 10rem; height: 3rem; font-weight:bolder;"
-                                            type="submit" class="text-white btn">Sign In</button>
-                                    </div>
-
-                                </form>
-                                <!--   
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button
+                      style="
+                        background: rgba(255, 162, 53, 1);
+                        border-radius: 25px;
+                        width: 10rem;
+                        height: 3rem;
+                        font-weight: bolder;
+                      "
+                      type="submit"
+                      class="text-white btn"
+                    >
+                      Sign In
+                    </button>
+                  </div>
+                </form>
+                <!--   
                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button style="background: white; border-radius:25px; border: 1px solid black;" type="submit"
                       class="btn "><img width="20" class="me-2" src="/images/google.png" alt="">Sign in with
                       Google</button>
                   </div>  -->
-                                <p class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">Don't have
-                                    an account ?
-                                    <a style="text-decoration: none;" href="/signup">Sign Up</a>
-                                </p>
-
-                            </div>
-                            <div
-                                class="col-md-10 p-lg-5 col-lg-6 col-xl-7 d-none d-lg-block d-flex align-items-center order-1 order-lg-2">
-                                <div style="background:rgba(0, 7, 171, 1);border-radius: 25px;">
-                                    <img src="/images/signinImage.png" style="width: 35rem;"
-                                        class="img-fluid ms-1 ms-lg-0 ms-xl-2" alt=" image" />
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                <p class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  Don't have an account ?
+                  <a
+                    style="text-decoration: none"
+                    href="/signup"
+                    >Sign Up</a
+                  >
+                </p>
+              </div>
+              <div
+                class="col-md-10 p-lg-5 col-lg-6 col-xl-7 d-none d-lg-block d-flex align-items-center order-1 order-lg-2"
+              >
+                <div
+                  style="background: rgba(0, 7, 171, 1); border-radius: 25px"
+                >
+                  <img
+                    src="/images/signinImage.png"
+                    style="width: 35rem"
+                    class="img-fluid ms-1 ms-lg-0 ms-xl-2"
+                    alt=" image"
+                  />
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"
+></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script>
-    require('jquery-validation')
-    function preventBack() {
-        window.history.forward()
-    }
-    setTimeout("preventBack()", 0)
-    window.onunload = function () { null };
+  require('jquery-validation');
+  function preventBack() {
+    window.history.forward();
+  }
+  setTimeout('preventBack()', 0);
+  window.onunload = function () {
+    null;
+  };
 
-
-    $(function () {
-        $('form[name="signinform"]').validate({
-            rules: {
-                signinValue: 'required',
-                password: 'required'
-            },
-            messages: {
-                signinValue: "Please enter your firstname",
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                email: "Please enter a valid email address"
-            },
-            submitHandler: function (form) {
-                form.submit();
-            }
-        }))
+  $(function () {
+    $('form[name="signinform"]').validate({
+      rules: {
+        signinValue: 'required',
+        password: 'required',
+      },
+      messages: {
+        signinValue: 'Please enter your firstname',
+        password: {
+          required: 'Please provide a password',
+          minlength: 'Your password must be at least 5 characters long',
+        },
+        email: 'Please enter a valid email address',
+      },
+      submitHandler: function (form) {
+        form.submit();
+      },
+    });
+  });
 </script>

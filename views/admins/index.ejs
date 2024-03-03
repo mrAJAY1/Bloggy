@@ -1,214 +1,264 @@
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"
+/>
 
-<div class="accordion" id="accordionExample">
-    <div class="accordion-item d-md-flex" style="height: 100vh;">
-        <div class="col-md-2 bg-light">
-            <a href="/signout" class="btn bg-primary text-white mb-5">
-                <h1>Signout</h1>
-            </a>
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    Author Data
-                </button>
-            </h2>
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Blog List
-                </button>
-            </h2>
-            <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Most Liked Blogs
-                </button>
-            </h2>
-
-        </div>
-        <div class="col-md-10">
-
-            <div id="collapseOne" class="accordion-collapse collapse show pt-5" aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-
-                    <table id="table1" class="table  table-hover table-responsive">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">E-mail</th>
-                                <th scope="col">Status</th>
-
-                            </tr>
-                        </thead>
-                        <tbody id="test">
-                            <%userdata.forEach(function(user,index){%>
-
-                            <tr>
-                                <th scope="row">
-                                    <%=index+1%>
-                                </th>
-                                <td class="text-capitalize">
-                                    <%=user._id.username%>
-                                </td>
-                                <td>
-                                    <%=user._id.email%>
-                                </td>
-                                <td>
-                                    <select onchange="status('<%=user._id.id%>',this)"
-                                        class="form-select form-select-sm status" aria-label=".form-select-sm example"
-                                        id="status">
-                                        <option id="selected" class="selected" value="<%=user._id.status%>">
-                                            <%=user._id.status%>
-                                        </option>
-
-                                    </select>
-                                </td>
-                            </tr>
-                            <%}) %>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-            <div id="collapseTwo" class="accordion-collapse collapse pt-5" aria-labelledby="headingTwo"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-
-                    <table id="table2" class="table table-hover table-responsive">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Author Name</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">View</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% blogdata.forEach(function(blog,index){%>
-                            <tr>
-                                <th scope="row"><%=index+1%></th>
-                                <td class="text-capitalize"><%=blog.author_id.username%> </td>
-                                <td class="text-capitalize align-middle"><%=blog.title%></td>
-                                <td><a href="/read_blog/<%=blog._id%> "><i class="bi bi-eye fs-5"></i></a></td>
-                                <td class="align-middle fs-5">
-                                    <a href="/admin/delete_blog/<%=blog._id%> "
-                                        onclick="return confirm('Are you sure you want to Delete?');">
-                                        <i type="button" class="bi bi-trash-fill"></i></a>
-                                </td>
-                            </tr>
-                            <%}) %>
-
-                            </td>
-
-                            </tr>
-
-
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-            <div id="collapseThree" class="accordion-collapse collapse pt-5" aria-labelledby="headingThree"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-
-                    <table id="table3" class="table table-hover table-responsive">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Blog Name</th>
-                                <th scope="col">likes</th>
-                                <th scope="col">Featured</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% blogdata.forEach(function(blog,index){%>
-                            <tr>
-                                <th scope="row"><%=index+1%></th>
-                                <td><%=blog.title%></td>
-                                <td><%=blog.size%> </td>
-                                <td>
-                                    <select onchange="featured('<%=blog.id%>',this)"
-                                        class="form-select form-select-sm featured" aria-label=".form-select-sm example"
-                                        id="featured">
-                                        <option id="selectedfeatured" class="selectedfeatured"
-                                            value="<%=blog.featured%>"><%=blog.featured%> </option>
-
-                                    </select>
-                                </td>
-                            </tr>
-                            <%}) %>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-        </div>
-
+<div
+  class="accordion"
+  id="accordionExample"
+>
+  <div
+    class="accordion-item d-md-flex"
+    style="height: 100vh"
+  >
+    <div class="col-md-2 bg-light">
+      <a
+        href="/signout"
+        class="btn bg-primary text-white mb-5"
+      >
+        <h1>Signout</h1>
+      </a>
+      <h2
+        class="accordion-header"
+        id="headingOne"
+      >
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          Author Data
+        </button>
+      </h2>
+      <h2
+        class="accordion-header"
+        id="headingTwo"
+      >
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo"
+          aria-expanded="false"
+          aria-controls="collapseTwo"
+        >
+          Blog List
+        </button>
+      </h2>
+      <h2
+        class="accordion-header"
+        id="headingThree"
+      >
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseThree"
+          aria-expanded="false"
+          aria-controls="collapseThree"
+        >
+          Most Liked Blogs
+        </button>
+      </h2>
     </div>
+    <div class="col-md-10">
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse show pt-5"
+        aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <table
+            id="table1"
+            class="table table-hover table-responsive"
+          >
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="test">
+              <%userdata.forEach(function(user,index){%>
 
+              <tr>
+                <td scope="row"><%=index+1%></td>
+                <td class="text-capitalize"><%=user._id.username%></td>
+                <td><%=user._id.email%></td>
+                <td>
+                  <select
+                    onchange="status('<%=user._id.id%>',this)"
+                    class="form-select form-select-sm status"
+                    aria-label=".form-select-sm example"
+                    id="status"
+                  >
+                    <option
+                      id="selected"
+                      class="selected"
+                      value="<%=user._id.status%>"
+                    >
+                      <%=user._id.status%>
+                    </option>
+                  </select>
+                </td>
+              </tr>
+              <%}) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div
+        id="collapseTwo"
+        class="accordion-collapse collapse pt-5"
+        aria-labelledby="headingTwo"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <table
+            id="table2"
+            class="table table-hover table-responsive"
+          >
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Author Name</th>
+                <th scope="col">Title</th>
+                <th scope="col">View</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% blogdata.forEach(function(blog,index){%>
+              <tr>
+                <th scope="row"><%=index+1%></th>
+                <td class="text-capitalize"><%=blog.author_id.username%></td>
+                <td class="text-capitalize align-middle"><%=blog.title%></td>
+                <td>
+                  <a href="/read_blog/<%=blog._id%> "
+                    ><i class="bi bi-eye fs-5"></i
+                  ></a>
+                </td>
+                <td class="align-middle fs-5">
+                  <a
+                    href="/admin/delete_blog/<%=blog._id%> "
+                    onclick="return confirm('Are you sure you want to Delete?');"
+                  >
+                    <i
+                      type="button"
+                      class="bi bi-trash-fill"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <%}) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div
+        id="collapseThree"
+        class="accordion-collapse collapse pt-5"
+        aria-labelledby="headingThree"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <table
+            id="table3"
+            class="table table-hover table-responsive"
+          >
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Blog Name</th>
+                <th scope="col">likes</th>
+                <th scope="col">Featured</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% blogdata.forEach(function(blog,index){%>
+              <tr>
+                <th scope="row"><%=index+1%></th>
+                <td><%=blog.title%></td>
+                <td><%=blog.size%></td>
+                <td>
+                  <select
+                    onchange="featured('<%=blog.id%>',this)"
+                    class="form-select form-select-sm featured"
+                    aria-label=".form-select-sm example"
+                    id="featured"
+                  >
+                    <option
+                      id="selectedfeatured"
+                      class="selectedfeatured"
+                      value="<%=blog.featured%>"
+                    >
+                      <%=blog.featured%>
+                    </option>
+                  </select>
+                </td>
+              </tr>
+              <%}) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"
+></script>
 <script>
-    $(document).ready(function () {
-        $('#table1').DataTable();
-        $('#table2').DataTable();
-        $('#table3').DataTable();
-    })
-    $(window).on('load', function () {
-        $(".selected").each(function () {
-            var y = $(this).val()
-            if (y == "active") {
-
-
-                $(this).parent().append('<option value="blocked">blocked</option>')
-            }
-            else {
-
-                $(this).parent().append('<option value="active">active</option>')
-            }
-
-        });
-
-        $(".selectedfeatured").each(function () {
-            var z = $(this).val()
-            if (z == "true") {
-
-                $(this).parent().append('<option value="false">false</option>')
-            }
-            else {
-                $(this).parent().append('<option value="true">true</option>')
-            }
-
-
-
-        });
-
-
+  $(document).ready(function () {
+    $('#table1').DataTable();
+    $('#table2').DataTable();
+    $('#table3').DataTable();
+  });
+  $(window).on('load', function () {
+    $('.selected').each(function () {
+      var y = $(this).val();
+      if (y == 'active') {
+        $(this).parent().append('<option value="blocked">blocked</option>');
+      } else {
+        $(this).parent().append('<option value="active">active</option>');
+      }
     });
 
+    $('.selectedfeatured').each(function () {
+      var z = $(this).val();
+      if (z == 'true') {
+        $(this).parent().append('<option value="false">false</option>');
+      } else {
+        $(this).parent().append('<option value="true">true</option>');
+      }
+    });
+  });
 
-    function status(userId, val) {
-        $.ajax({
-            type: "POST", url:
-                "/admin/setstatus", data: { userId: userId, status: val.value }
-        })
-    }
-    function featured(blogId, val) {
-        alert("changed")
-        $.ajax({
-            type: "POST", url:
-                "/admin/setfeatured", data: { blogId: blogId, featured: val.value }
-        })
-    }
-
+  function status(userId, val) {
+    $.ajax({
+      type: 'POST',
+      url: '/admin/setstatus',
+      data: { userId: userId, status: val.value },
+    });
+  }
+  function featured(blogId, val) {
+    alert('changed');
+    $.ajax({
+      type: 'POST',
+      url: '/admin/setfeatured',
+      data: { blogId: blogId, featured: val.value },
+    });
+  }
 </script>

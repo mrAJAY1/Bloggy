@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 
-const UserModel = require('../model').User;
+const UserModel = require('../models/model').User;
 
 module.exports = {
   doSignup: async (userData) => {
@@ -54,60 +54,58 @@ module.exports = {
     return userData;
   },
   fav: async (id, userId) => {
-    const result = await UserModel.findOne({
-      $and: [
-        {
-          _id: userId,
-        },
-        {
-          'favorites.blogId': ObjectId(id),
-        },
-      ],
-    });
-    const data = { blogId: ObjectId(id) };
-    console.log(result)
-    if (!result) {
-      await UserModel.findOneAndUpdate(
-        { _id: userId },
-        { $push: { favorites: data } }
-      );
-      return true;
-    }
+    // pull the data if it exists
+    const result = await UserModel.findOneAndUpdate(
+      {
+        _id: userId,
+        'favorites.blogId': new ObjectId(String(id)),
+      },
+      {
+        $pull: { favorites: { blogId: new ObjectId(String(id)) } },
+      },
+      { new: true }
+    );
+    if (result) return false;
+    // push the data if it doesn't exist
     await UserModel.findOneAndUpdate(
       { _id: userId },
-      { $pull: { favorites: data } }
+      { $push: { favorites: { blogId: new ObjectId(String(id)) } } },
+      { new: true }
     );
-    return false;
+    return true;
   },
   findFavorites: async (id) => {
     const result = await UserModel.aggregate([
       {
-        $match: { _id: ObjectId(id) },
+        $match: { _id: new ObjectId(String(id)) },
       },
       {
-        $unwind:{
-          path:'$favorites'
+        $unwind: {
+          path: '$favorites',
         },
       },
       {
         $lookup: {
           from: 'blogs',
-          localField:'favorites.blogId',
-          foreignField:"_id",
-          as:'favorites.favorites'
-        }
+          localField: 'favorites.blogId',
+          foreignField: '_id',
+          as: 'favorites.favorites',
+        },
       },
       {
-        $unwind:{
-          path:"$favorites.favorites"
-        }
-      }
+        $unwind: {
+          path: '$favorites.favorites',
+        },
+      },
     ]);
 
     return result;
   },
-  isBlocked:async (id)=>{
-    const result = await UserModel.findOne({_id:id,status:{$ne:"active"}})
+  isBlocked: async (id) => {
+    const result = await UserModel.findOne({
+      _id: id,
+      status: { $ne: 'active' },
+    });
     return result;
-  }
+  },
 };

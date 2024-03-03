@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 
-const BlogModel = require('../model').Blog;
+const BlogModel = require('../models/model').Blog;
 
 module.exports = {
   createBlog: async (blogData) => {
@@ -102,72 +102,51 @@ module.exports = {
     return result;
   },
   like: async (blogId, usersId) => {
-    const result = await BlogModel.findOne({
-      $and: [
-        {
-          _id: blogId,
-        },
-        {
-          'like.userId': usersId,
-        },
-      ],
-    }).lean();
-    const data = { userId: usersId };
-    if (!result) {
-      await BlogModel.findOneAndUpdate(
-        { _id: blogId },
-        { $push: { like: data } }
-      );
-      const likeLength = await BlogModel.aggregate([
-        {
-          $match: { _id: ObjectId(blogId) },
-        },
-        {
-          $project: {
-            likelength: { $size: '$like' },
-          },
-        },
-      ]);
-      return { likeLength, status: true };
-    }
-    await BlogModel.findOneAndUpdate(
-      { _id: blogId },
-      { $pull: { like: data } }
-    );
-    const likeLength = await BlogModel.aggregate([
+    // checks if the user has already liked the blog
+    let result = await BlogModel.findOneAndUpdate(
       {
-        $match: { _id: ObjectId(blogId) },
+        _id: new ObjectId(String(blogId)),
+        'like.userId': usersId,
+      },
+      {
+        $pull: { like: { userId: usersId } },
+      },
+      { new: true }
+    );
+    if (result) {
+      return { likeLength: result.like.length, status: false };
+    }
+    result = await BlogModel.findOneAndUpdate(
+      {
+        _id: new ObjectId(String(blogId)),
+      },
+      {
+        $push: { like: { userId: usersId, _id: new ObjectId() } },
+      },
+      { new: true }
+    );
+    return { likeLength: result?.like?.length || 'NA', status: true };
+  },
+  search: async (keyword) => {
+    const result = await BlogModel.aggregate([
+      {
+        $match: { title: { $regex: keyword, $options: '$i' } },
       },
       {
         $project: {
-          likelength: { $size: '$like' },
+          title: 1,
+          content: 1,
+          _id: 1,
+          blog_img: 1,
+          author_id: 1,
+          createdAt: 1,
+          category: 1,
         },
       },
-    ]);
-
-    return { likeLength, status: false };
-  },
-  search: async(keyword)=>{
-    const result = await BlogModel.aggregate([
       {
-        $match:{title:{$regex:keyword,$options:'$i'}}
+        $sort: { createdAt: -1 },
       },
-      {
-        $project:{
-          title:1,
-          content:1,
-          _id:1,
-          blog_img:1,
-          author_id:1,
-          createdAt:1,
-          category:1
-        }
-      },  
-      {
-        $sort:{createdAt:-1}
-      }
-    ])
-    return(result);
-  }
-
+    ]);
+    return result;
+  },
 };

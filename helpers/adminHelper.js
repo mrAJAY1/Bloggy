@@ -1,7 +1,7 @@
 const {ObjectId} = require('mongodb')
 
-const UserModel = require('../model').User;
-const BlogModel = require('../model').Blog;
+const UserModel = require('../models/model').User;
+const BlogModel = require('../models/model').Blog;
 
 
 module.exports = {

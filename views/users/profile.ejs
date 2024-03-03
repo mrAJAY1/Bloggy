@@ -1,54 +1,80 @@
 <main id="main">
-    <section>
-        <div class="container" data-aos="fade-up">
-            <div class="row">
-                <div class=" offset-lg-4 col-lg-4 text-center mb-5">
-                    <img src="/assets/img/person-1.jpg" alt="" class="img-fluid rounded-circle w-50 mb-4">
-                    <h4><%=userData.username %> </h4>
-                    <span class="d-block mb-3 text-uppercase"><%=userData.country%> &#160;&amp;
-                        &#160;<%=userData.state %> </span>
-                </div>
-            </div>
+  <section>
+    <div
+      class="container"
+      data-aos="fade-up"
+    >
+      <div class="row">
+        <div class="offset-lg-4 col-lg-4 text-center mb-5">
+          <img
+            src="/assets/img/person-1.jpg"
+            alt=""
+            class="img-fluid rounded-circle w-50 mb-4"
+          />
+          <h4><%=userData.username %></h4>
+          <span class="d-block mb-3 text-uppercase"
+            ><%=userData.country%> &#160;&amp; &#160;<%=userData.state %>
+          </span>
         </div>
-    </section>
-    <section>
-        <div class="container" data-aos="fade-up">
-            <div class="row">
-                <%if(typeof blogData !== 'undefined'){%>
-                <% blogData.forEach((data,index)=>{%>
-                <div class="col-lg-4 mb-5 border-start border-end custom-border">
-                    <div class="post-entry-1">
-                        <a  href="/read_blog/<%=data._id %> "><img  src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
-              data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
-              <%}else{%>assets/img/post-landscape-1.jpg<%} %>"alt=""
-                                class="" style="max-width: 100%;object-fit:cover;object-position:center"></a>
-                        <div class="post-meta"><span class="date"><%=data.category%> </span> <span
-                                class="mx-1">&bullet;</span>
-                            <span><%=data.createdAt.getDate() %>/
-                                <%=data.createdAt.getMonth()%>/<%=data.createdAt.getFullYear() %> </span>
-                        </div>
-                        <h2><a href="/read_blog/<%=data._id %>"><%=data.title%> </a></h2>    
-                        <div class="row">
-                            <div class="col-3">
-                                <a onclick="return window.confirm('Are you sure you want to delete the blog')" href="/delete_blog/<%=data._id%>"><span class="bi fs-4 bi-trash"></span></a>
-                            </div>
-                            <div class="col-3">
-                                <a  href="/update_blog/<%=data._id%>"><span class="bi fs-4 bi-pen"></span></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-                </div>
-
-                <%}) %>
-                <%} %>
-
-
+      </div>
+    </div>
+  </section>
+  <section>
+    <div
+      class="container"
+      data-aos="fade-up"
+    >
+      <div class="row">
+        <%if(typeof blogData !== 'undefined'){%> <%
+        blogData.forEach((data,index)=>{%>
+        <div class="col-lg-4 mb-5 border-start border-end custom-border">
+          <div class="post-entry-1">
+            <a href="/read_blog/<%=data._id %> "
+              ><img
+                src="<%=data.blog_img[0]?data.blog_img[0]:'assets/img/post-landscape-1.jpg' %>"
+                
+                style="
+                  max-width: 100%;
+                  object-fit: contain;
+                  object-position: center;
+                "
+            /></a>
+            <div class="post-meta">
+              <span class="date"><%=data.category%> </span>
+              <span class="mx-1">&bullet;</span>
+              <span
+                ><%=data.createdAt.getDate() %>/
+                <%=data.createdAt.getMonth()%>/<%=data.createdAt.getFullYear()
+                %>
+              </span>
             </div>
+            <h2><a href="/read_blog/<%=data._id %>"><%=data.title%> </a></h2>
+            <div class="row">
+              <div class="col-3">
+                <a
+                  onclick="return window.confirm('Are you sure you want to delete the blog')"
+                  href="/delete_blog/<%=data._id%>"
+                  ><span class="bi fs-4 bi-trash"></span
+                ></a>
+              </div>
+              <div class="col-3">
+                <a href="/update_blog/<%=data._id%>"
+                  ><span class="bi fs-4 bi-pen"></span
+                ></a>
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
 
-</main><!-- End #main -->
+        <%}) %> <%} %>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- End #main -->
 
-<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a
+  href="#"
+  class="scroll-top d-flex align-items-center justify-content-center"
+  ><i class="bi bi-arrow-up-short"></i
+></a>

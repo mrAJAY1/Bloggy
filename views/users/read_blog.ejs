@@ -1,24 +1,36 @@
 d Header -->
 
 <main id="main">
-
   <section class="single-post-content">
     <div class="container">
       <div class="row">
-        <div class="col-md-9 post-content" data-aos="fade-up">
-
+        <div
+          class="col-md-9 post-content"
+          data-aos="fade-up"
+        >
           <!-- ======= Single Post Content ======= -->
           <div class="single-post">
-            <div class="post-meta"><span class="date"><%=slicedContent.category%> </span> <span
-                class="mx-1">&bullet;</span> <span><%=slicedContent.createdAt.getDate()%>/
-                <%=slicedContent.createdAt.getMonth() %> </span></div>
+            <div class="post-meta">
+              <span class="date"><%=slicedContent.category%> </span>
+              <span class="mx-1">&bullet;</span>
+              <span
+                ><%=slicedContent.createdAt.getDate()%>/
+                <%=slicedContent.createdAt.getMonth() %>
+              </span>
+            </div>
             <h1 class="mb-5"><%=slicedContent.title%></h1>
-            <p><span class="firstcharacter"><%=slicedContent.firstcharacter%></span><%=slicedContent.p1%> </p>
+            <p>
+              <span class="firstcharacter"
+                ><%=slicedContent.firstcharacter%></span
+              ><%=slicedContent.p1%>
+            </p>
             <% if(typeof slicedContent.blog_img[0] !== 'undefined'){%>
             <figure class="my-4">
               <img
                 src="data:<%=slicedContent.blog_img[0].contentType%>;base64,<%=slicedContent.blog_img[0].imageBase64%>"
-                alt="" class="img-fluid">
+                alt=""
+                class="img-fluid"
+              />
             </figure>
             <%} %>
 
@@ -31,7 +43,9 @@ d Header -->
             <figure class="my-4">
               <img
                 src="data:<%=slicedContent.blog_img[1].contentType%>;base64,<%=slicedContent.blog_img[1].imageBase64%>"
-                alt="" class="img-fluid">
+                alt=""
+                class="img-fluid"
+              />
             </figure>
             <%} %>
             <p><%=slicedContent.p6%></p>
@@ -41,68 +55,127 @@ d Header -->
             <p><%=slicedContent.p10%></p>
             <div class="row">
               <div class="col-3">
-
-                <span value="<%=slicedContent._id%>" class="likes"><% if(typeof liked!=='undefined'){%><% if(liked){%><i
-                    class="like-icon bi fs-4 bi-heart-fill text-danger"></i><%}else{%><i
-                    class="like-icon bi fs-4 bi-heart"></i><%} %> <%}else{%><i
-                    class="like-icon bi fs-4 bi-heart"></i><%} %> &#160;<small
-                    class="likes-count"><%=slicedContent.like.length%></small></span>
+                <span
+                  value="<%=slicedContent._id%>"
+                  class="likes"
+                  ><% if(typeof liked!=='undefined'){%><% if(liked){%><i
+                    class="like-icon bi fs-4 bi-heart-fill text-danger"
+                  ></i
+                  ><%}else{%><i class="like-icon bi fs-4 bi-heart"></i><%} %>
+                  <%}else{%><i class="like-icon bi fs-4 bi-heart"></i><%} %>
+                  &#160;<small class="likes-count"
+                    ><%=slicedContent.like.length%></small
+                  ></span
+                >
               </div>
               <div class="col-3">
-                <span class="fav" value="<%=slicedContent._id %>"><%if(typeof faved !== 'undefined'){%>
-                  <%if(faved){%>
-                    <i class="bi fav-icon fs-4 bi-bookmark-heart-fill text-warning"></i>
-                    <%}else{%>
-                      <i class="bi fav-icon fs-4 bi-bookmark-heart"></i>
-                      <%} %> 
-                  <%}else{%> <i class="bi fav-icon fs-4 bi-bookmark-heart"></i><%
-               
-                  }
-                  %>
+                <span
+                  class="fav"
+                  value="<%=slicedContent._id %>"
+                  ><%if(typeof faved !== 'undefined'){%> <%if(faved){%>
+                  <i
+                    class="bi fav-icon fs-4 bi-bookmark-heart-fill text-warning"
+                  ></i>
+                  <%}else{%>
+                  <i class="bi fav-icon fs-4 bi-bookmark-heart"></i>
+                  <%} %> <%}else{%>
+                  <i class="bi fav-icon fs-4 bi-bookmark-heart"></i><% } %>
                 </span>
               </div>
             </div>
-          </div><!-- End Single Post Content -->
+          </div>
+          <!-- End Single Post Content -->
         </div>
-        <div class="col-md-3" style="flex-flow: column;overflow-y: auto;">
-
+        <div
+          class="col-md-3"
+          style="flex-flow: column; overflow-y: auto"
+        >
           <div class="aside-block">
             <h3 class="aside-title">Video</h3>
             <div class="video-post">
-              <a href="https://youtu.be/a6VVrAZUnsc" class="glightbox link-video">
+              <a
+                href="https://youtu.be/a6VVrAZUnsc"
+                class="glightbox link-video"
+              >
                 <span class="bi-play-fill"></span>
-                <img src="/assets/img/post-landscape-5.jpg" alt="" class="img-fluid">
+                <img
+                  src="/assets/img/post-landscape-5.jpg"
+                  alt=""
+                  class="img-fluid"
+                />
               </a>
             </div>
-          </div><!-- End Video -->
+          </div>
+          <!-- End Video -->
 
           <div class="aside-block">
             <h3 class="aside-title">Categories</h3>
             <ul class="aside-links list-unstyled">
-              <li><a href="/category/travel"><i class="bi bi-chevron-right"></i> Travel</a></li>
-              <li><a href="/category/culture"><i class="bi bi-chevron-right"></i> Culture</a></li>
-              <li><a href="/category/sport"><i class="bi bi-chevron-right"></i> Sport</a></li>
-              <li><a href="/category/food"><i class="bi bi-chevron-right"></i> Food</a></li>
-              <li><a href="/category/space"><i class="bi bi-chevron-right"></i> Space</a></li>
-              <li><a href="/category/cars"><i class="bi bi-chevron-right"></i> Cars</a></li>
-              <li><a href="/category/startups"><i class="bi bi-chevron-right"></i> Startups</a></li>
-              <li><a href="/category/tech"><i class="bi bi-chevron-right"></i> Tech</a></li>
-              <li><a href="/category/global"><i class="bi bi-chevron-right"></i> Global</a></li>
+              <li>
+                <a href="/category/travel"
+                  ><i class="bi bi-chevron-right"></i> Travel</a
+                >
+              </li>
+              <li>
+                <a href="/category/culture"
+                  ><i class="bi bi-chevron-right"></i> Culture</a
+                >
+              </li>
+              <li>
+                <a href="/category/sport"
+                  ><i class="bi bi-chevron-right"></i> Sport</a
+                >
+              </li>
+              <li>
+                <a href="/category/food"
+                  ><i class="bi bi-chevron-right"></i> Food</a
+                >
+              </li>
+              <li>
+                <a href="/category/space"
+                  ><i class="bi bi-chevron-right"></i> Space</a
+                >
+              </li>
+              <li>
+                <a href="/category/cars"
+                  ><i class="bi bi-chevron-right"></i> Cars</a
+                >
+              </li>
+              <li>
+                <a href="/category/startups"
+                  ><i class="bi bi-chevron-right"></i> Startups</a
+                >
+              </li>
+              <li>
+                <a href="/category/tech"
+                  ><i class="bi bi-chevron-right"></i> Tech</a
+                >
+              </li>
+              <li>
+                <a href="/category/global"
+                  ><i class="bi bi-chevron-right"></i> Global</a
+                >
+              </li>
             </ul>
-          </div><!-- End Categories -->
+          </div>
+          <!-- End Categories -->
 
-         <!-- End Tags -->
-
+          <!-- End Tags -->
         </div>
       </div>
     </div>
   </section>
-</main><!-- End #main -->
+</main>
+<!-- End #main -->
 
-<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous">
-  </script>
-<script>
-
-</script>
+<a
+  href="#"
+  class="scroll-top d-flex align-items-center justify-content-center"
+  ><i class="bi bi-arrow-up-short"></i
+></a>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"
+></script>
+<script></script>

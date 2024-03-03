@@ -83,13 +83,12 @@
           }).done((result) => {
             if (!result.session) window.alert('please sign in to continue');
             else {
-             
               if(result.result.status){
-                $(this).find('.likes-count').html(result.result.likeLength[0].likelength)
+                $(this).find('.likes-count').html(result.result.likeLength)
                 $(this).find('.like-icon').removeClass('bi-heart').addClass('bi-heart-fill').addClass('text-danger')
                 
               }else{
-                $(this).find('.likes-count').html(result.result.likeLength[0].likelength)
+                $(this).find('.likes-count').html(result.result.likeLength)
                 $(this).find('.like-icon').removeClass('bi-heart-fill').removeClass('text-danger').addClass('bi-heart')
               }
             }

@@ -152,8 +152,7 @@
             <div class="row d-flex m-0">
               <div style=" height: 300px;width: 40%; padding: 0; overflow: hidden;">
                 <div class="" style="height: 100%; width:100%;">
-                  <img class="card-img" <% if(typeof data.blog_img[0]!=='undefined' ){%>src="data:
-                  <%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> " <%} %>
+                  <img class="card-img" <% data.blog_img[0] && src="<%=data.blog_img[0]%>" %>
                         class="rounded-start" alt=".image" />
 
                 </div>
