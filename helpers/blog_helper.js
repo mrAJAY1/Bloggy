@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 const { ObjectId } = require('mongodb');
 
 const BlogModel = require('../models/model').Blog;
@@ -83,14 +84,20 @@ module.exports = {
         .limit(limit)
         .lean()
         .sort({ createdAt: -1 });
-      return result;
+      return {
+        data: result,
+        done: !!((await BlogModel.countDocuments()) - parseInt(skip)),
+      };
     }
     const result = await BlogModel.find({ category })
       .skip(skip)
       .limit(limit)
       .lean()
       .sort({ createdAt: -1 });
-    return result;
+    return {
+      data: result,
+      done: !!((await BlogModel.countDocuments()) - parseInt(skip)),
+    };
   },
   like: async (blogId, usersId) => {
     // checks if the user has already liked the blog

@@ -6,10 +6,10 @@
           <div class="col-md-9 " data-aos="fade-up">
             <div class="masonry-grid">
             <h3 class="category-title">All Blogs</h3>
-      <%if (result.length == 0){%>
+      <%if (result.data.length == 0){%>
     <h1 class="no-blogs">No Blogs yet</h1>
               <%} %>
-            <% result.forEach((data,index)=>{%>
+            <% result.data.forEach((data,index)=>{%>
           <div class="post-entry-2 half border-top border-bottom  masonry-item" style="min-height: 200px;">
             <%if (typeof data.coverImage !== 'undefined'){%>
               <a href="/read_blog/<%=data._id%> " class="me-4 thumbnail">

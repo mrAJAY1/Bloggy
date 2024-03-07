@@ -127,24 +127,29 @@
     <script src="/assets/js/main.js"></script>
     <script>
       $(window).ready(function () {
-        if ($('.no-blog')) {
+        if ($('.no-blogs').length) {
           $('#load-more').remove();
         }
         sessionStorage.removeItem('category-skip');
         $('#load-more').on('click', function () {
           const category = window.location.pathname.split('/')[2];
           const limit = 10;
-          const skip = parseInt(sessionStorage.getItem('category-skip')) || 5; // 0 is default.getItem('category-skip');
+          const skip = parseInt(sessionStorage.getItem('category-skip')) || 10; // 0 is default.getItem('category-skip');
           sessionStorage.setItem('category-skip', skip + 5);
+          const loaderParent = $('#load-more').parent();
+          $('#load-more').remove();
+
+          loaderParent.append('<p id="loadingMore">Loading</p>');
           $.ajax({
             type: 'GET',
-            url: `/more/${category}?limit=${limit}&skip=${skip || 0}`,
+            url: `/more/${category || 'all-blogs'}?limit=${limit}&skip=${skip}`,
           })
             .done((result) => {
-              if (result) {
-                result.forEach((data) => {
-                  console.log(data);
-                  $('.masonry-grid').append(
+              $('#loadingMore').remove();
+              if (result.data.length) {
+                result.data.forEach((data) => {
+                  if (result.done) $('#load-more').remove();
+                  return $('.masonry-grid').append(
                     window.location.pathname.split('/')[1] !== 'category'
                       ? ` <div class="masonry-item first-item-full">
               <div class="post-entry-1 lg">
@@ -201,9 +206,14 @@
             </div>`
                   );
                 });
+              } else {
+                $('#loadingMore').remove();
+                $('#load-more').remove();
               }
             })
             .fail((error) => {
+              loaderParent.remove('#loadingMore');
+
               console.log(error);
             });
         });

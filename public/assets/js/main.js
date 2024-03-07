@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   /**
    * Sticky header on scroll
@@ -6,9 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectHeader = document.querySelector('#header');
   if (selectHeader) {
     document.addEventListener('scroll', () => {
-      window.scrollY > 100
-        ? selectHeader.classList.add('sticked')
-        : selectHeader.classList.remove('sticked');
+      if (window.scrollY > 100) selectHeader.classList.add('sticked');
+      else selectHeader.classList.remove('sticked');
     });
   }
 
@@ -117,15 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchClose = document.querySelector('.js-search-close');
   const searchWrap = document.querySelector('.js-search-form-wrap');
 
+  if(searchOpen)
   searchOpen.addEventListener('click', (e) => {
     e.preventDefault();
     searchWrap.classList.add('active');
   });
-
-  searchClose.addEventListener('click', (e) => {
-    e.preventDefault();
-    searchWrap.classList.remove('active');
-  });
+  if (searchClose)
+    searchClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      searchWrap.classList.remove('active');
+    });
 
   /**
    * Initiate glightbox
