@@ -3,29 +3,26 @@ const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 const userHelper = require('../helpers/user_helper');
 const blogHelper = require('../helpers/blog_helper');
+const Showdown = require('showdown');
 
 const access = 1;
 let userActive;
 module.exports = {
   getHome: async (req, res) => {
-    const user = req.session.userSignedIn ? req.session.userSignedIn : {};
+    const user = req.session.userSignedIn ?? {};
     userActive = {
       username: user.username,
       id: user._id,
     };
-    const result = await blogHelper.findLatest(req.session.userId);
+    const result = await blogHelper.findLatest(7);
     const featured = await blogHelper.findFeatured();
     const trending = await blogHelper.findTrending();
-    const blogPrime = result.slice(0, 1);
-    const blogSecond = result.slice(1, 3);
-    const blogThird = result.slice(3);
-
+    // eslint-disable-next-line no-param-reassign
+    if (result) result.forEach((blog) => delete blog.content);
     res.render('users/index', {
       userActive,
       featured,
-      blogPrime,
-      blogSecond,
-      blogThird,
+      blogData: result,
       trending,
     });
   },
@@ -42,7 +39,6 @@ module.exports = {
     const errorData = req.session.signupEntered
       ? req.session.signupEntered
       : {};
-
     delete req.session.signupEntered;
     res.render('users/signup', {
       emailErr: req.flash('emailErr'),
@@ -141,7 +137,7 @@ module.exports = {
   },
   getBlogCreate: async (req, res) => {
     const signed = req.session.userSignedIn;
-    if (!signed) res.redirect('/');
+    if (!signed) return res.redirect('/');
     const isBlocked = await userHelper.isBlocked(signed._id);
     if (!isBlocked)
       res.render('users/create_blog', { blogData: 0, userActive });
@@ -152,69 +148,13 @@ module.exports = {
     if (!signed) res.redirect('/');
     const isBlocked = await userHelper.isBlocked(signed._id);
     if (!isBlocked) {
-      const { files } = req;
-
       const authorData = req.session.userSignedIn;
       const finalData = req.body;
+      console.log(finalData);
       finalData.author_id = {
         id: authorData._id,
         username: authorData.username,
       };
-      const imageUpload = files.map((file) => {
-        // Use the uploaded file's name as the asset's public ID and
-        // allow overwriting the asset with new versions
-        const options = {
-          use_filename: true,
-          unique_filename: false,
-          overwrite: true,
-        };
-        return new Promise((resolve, reject) => {
-          cloudinary.uploader.upload(file.path, options, (error, result) => {
-            if (error) reject(error);
-            else resolve(result.url);
-          });
-        });
-      });
-
-      const uploadedImages = await Promise.all(imageUpload);
-      console.log(uploadedImages);
-      finalData.blog_img = uploadedImages;
-
-      // const uploadImage = async (imagePath) => {
-      //   // Use the uploaded file's name as the asset's public ID and
-      //   // allow overwriting the asset with new versions
-      //   const options = {
-      //     use_filename: true,
-      //     unique_filename: false,
-      //     overwrite: true,
-      //   };
-
-      //   try {
-      //     // Upload the image
-      //     const result = await cloudinary.uploader.upload(imagePath, options);
-      //     console.log(result);
-      //     return result.public_id;
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // };
-
-      // // converrt image into base 64 encoding
-      // const imgArray = await files.map((file) => {
-      //   const img = fs.readFileSync(file.path);
-      //   const encodeImage = img.toString('base64');
-      //   return encodeImage;
-      // });
-      // const finalImg = [];
-      // await imgArray.map((src, index) => {
-      //   const result = finalImg.push({
-      //     filename: files[index].originalname,
-      //     contentType: files[index].mimetype,
-      //     imageBase64: src,
-      //   });
-      //   return result;
-      // });
-      // finalData.blog_img = finalImg;
       try {
         await blogHelper.createBlog(finalData);
         res.redirect(`/profile/${authorData._id}`);
@@ -227,8 +167,19 @@ module.exports = {
     }
   },
   getCategory: async (req, res) => {
-    const result = await blogHelper.findByCategory(req.params.id);
+    const result = await blogHelper.findByCategory(
+      req.params.id,
+      req.query.limit
+    );
     res.render('users/category', { userActive, result });
+  },
+  getMoreCategoryItems: async (req, res) => {
+    const result = await blogHelper.findByCategory(
+      req.params.id,
+      req.query.limit,
+      req.query.skip
+    );
+    res.send(result);
   },
   getBlogDelete: async (req, res) => {
     const id = req.session.userId;
@@ -245,26 +196,7 @@ module.exports = {
     res.render('users/create_blog', { blogData, userActive });
   },
   postEditBlog: async (req, res) => {
-    const { files } = req;
     const { body } = req;
-    // converrt image into base 64 encoding
-
-    const imgArray = await files.map((file) => {
-      const img = fs.readFileSync(file.path);
-      const encodeImage = img.toString('base64');
-      return encodeImage;
-    });
-    const finalImg = [];
-    await imgArray.map((src, index) => {
-      const result = finalImg.push({
-        filename: files[index].originalname,
-        contentType: files[index].mimetype,
-        imageBase64: src,
-      });
-      return result;
-    });
-    body.blog_img = finalImg;
-
     try {
       await blogHelper.updateBlog(body, req.params.id);
       res.redirect(`/profile/${req.session.userId}`);
@@ -277,41 +209,24 @@ module.exports = {
     try {
       const blogData = await blogHelper.findAuthorBlogs(req.params.id);
       const userData = await userHelper.findById(blogData[0].author_id);
-      res.render('users/user_profile', { blogData, userData, userActive });
+      res.render('users/author_profile', { blogData, userData, userActive });
     } catch (errMessage) {
-      res.render('users/user_profile', { userActive });
+      res.render('users/author_profile', { userActive });
     }
   },
   readBlog: async (req, res) => {
     const blog = await blogHelper.BlogDetails(req.params.id);
-    const user = await userHelper.findById(req.session.userId);
-    const blogId = req.params.id;
-    const { userSignedIn } = req.session;
     const { userId } = req.session;
-    const slicedContent = {
-      _id: blog._id,
-      createdAt: blog.createdAt,
-      like: blog.like,
-      category: blog.category,
-      author_id: blog.author_id,
-      blog_img: blog.blog_img,
-      title: blog.title,
-      firstcharacter: blog.content.slice(0, 1),
-      p1: blog.content.slice(1, 200),
-      p2: blog.content.slice(200, 450),
-      p3: blog.content.slice(450, 700),
-      p4: blog.content.slice(700, 950),
-      p5: blog.content.slice(950, 1200),
-      p6: blog.content.slice(1200, 1450),
-      p7: blog.content.slice(1450, 1700),
-      p8: blog.content.slice(1700, 1950),
-      p9: blog.content.slice(1950, 2200),
-      p10: blog.content.slice(2200, 2450),
-    };
+    const { userSignedIn } = req.session;
+    let user = null;
+    if (userSignedIn && userId) user = await userHelper.findById(userId);
+    if (!blog) return res.redirect('/');
+    const blogId = req.params.id;
+
     const likes = blog.like;
     let liked = false;
     let faved = false;
-    if (userSignedIn) {
+    if (user) {
       // eslint-disable-next-line array-callback-return
       likes.some((dt) => {
         if (dt.userId === userId) liked = true;
@@ -325,8 +240,11 @@ module.exports = {
         }
       });
     }
-    console.log(faved);
-    res.render('users/read_blog', { userActive, slicedContent, liked, faved });
+    const showdown = new Showdown.Converter();
+    blog.content = showdown.makeHtml(blog.content);
+    blog.likeLength = blog.like.length;
+    delete blog.like;
+    res.render('users/read_blog', { userActive, blogData: blog, liked, faved });
     faved = false;
     liked = false;
   },
@@ -337,8 +255,17 @@ module.exports = {
     }
   },
   like: async (req, res) => {
-    const result = await blogHelper.like(req.params.id, req.session.userId);
-    res.send({ result, session: req.session.userId });
+    if (!req.session.userId) {
+      res.send({ session: null });
+      return;
+    }
+    try {
+      const result = await blogHelper.like(req.params.id, req.session.userId);
+      res.send({ result, session: req.session.userId });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ message: 'Internal Server Error' });
+    }
   },
   fav: async (req, res) => {
     const data = req.params.id;
@@ -356,5 +283,62 @@ module.exports = {
   search: async (req, res) => {
     const result = await blogHelper.search(req.query.search);
     res.render('users/search', { result, userActive });
+  },
+
+  upload: async (req, res) => {
+    cloudinary.uploader.upload(req.file.path, (error, result) => {
+      if (error) {
+        console.error('Upload failed', error);
+        return res.status(500).json({ error: 'Upload failed' });
+      }
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.log(err);
+        console.log(`Deleted ${req.file.path}`);
+      });
+      return res
+        .status(200)
+        .json({ url: result.secure_url, public_id: result.public_id });
+    });
+  },
+  reUpload: async (req, res) => {
+    // extract the publicId from query string
+    const { publicId } = req.body;
+    if (!publicId) {
+      res.status(400).json({ error: 'Missing publicId in query string' });
+      return;
+    }
+    try {
+      await cloudinary.uploader.destroy(publicId);
+      await cloudinary.uploader.upload(req.file.path, (error, result) => {
+        if (error) {
+          console.error('Re Upload failed', error);
+          return res.status(500).json({ error: 'Re upload failed' });
+        }
+        fs.unlink(req.file.path, (err) => {
+          if (err) console.log(err);
+          console.log(`Deleted ${req.file.path}`);
+        });
+        return res
+          .status(200)
+          .json({ url: result.secure_url, public_id: result.public_id });
+      });
+    } catch (error) {
+      console.error('Failed to delete Image', error);
+      res.status(500).json({ error: 'Failed to delete Image' });
+    }
+  },
+  deleteUpload: async (req, res) => {
+    const { publicId } = req.query;
+    if (!publicId) {
+      res.status(400).json({ error: 'Missing publicId in query string' });
+      return;
+    }
+    try {
+      await cloudinary.uploader.destroy(publicId);
+      res.status(200).json({ message: 'Image deleted successfully' });
+    } catch (error) {
+      console.error('Failed to delete Image', error);
+      res.status(500).json({ error: 'Failed to delete Image' });
+    }
   },
 };

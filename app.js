@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('req-flash');
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 const db = mongoose.connection;
@@ -18,7 +19,8 @@ mongoose.connect(
 );
 
 // eslint-disable-next-line no-console
-db.on('error', console.error.bind(console, 'connection error: '));
+db.on('error', console.error.bind('MongoDB connection error:'));
+
 db.once('open', () => {
   // eslint-disable-next-line no-console
   console.log('Connected successfully');
@@ -39,6 +41,7 @@ const cookieExp = 7 * 24 * 60 * 60 * 1000;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -8,7 +8,9 @@
           <% result.forEach((data,index)=>{%>
             <div class="d-md-flex post-entry-2 half border-top border-bottom custom-border ">
                 <a href="/read_blog/<%=data.favorites.favorites._id %>" class="me-4 thumbnail">
-                  <img <%if(typeof data.favorites.favorites.blog_img[0] !== 'undefined'){%>src="data:<%=data.favorites.favorites.blog_img[0].contentType%>;base64,<%=data.favorites.favorites.blog_img[0].imageBase64%>"<%}else{%>src="/assets/img/post-landscape-6.jpg"<%}%>  alt="" class="img-fluid">
+                  <%if(typeof data.favorites.favorites.coverImage !== 'undefined'){%>
+                  <img src="<%=data.favorites.favorites.coverImage%>" alt="cover image" class="img-fluid">
+                  <%}%>
 
                 </a>
                 <div>

@@ -1,6 +1,34 @@
-d Header -->
-
 <main id="main">
+  <div class="d-flex flex-lg-column interactions">
+    <div class="like-container">
+      <span
+        value="<%=blogData._id%>"
+        class="likes d-flex flex-lg-column"
+        ><% if(typeof liked!=='undefined'){%><% if(liked){%><i
+          class="like-icon bi fs-4 bi-heart-fill text-danger"
+        ></i
+        ><%}else{%><i class="like-icon bi fs-4 bi-heart"></i><%} %> <%}else{%><i
+          class="like-icon bi fs-4 bi-heart"
+        ></i
+        ><%} %>
+        <small class="likes-count text-center"
+          ><%=blogData.likeLength%></small
+        ></span
+      >
+    </div>
+    <div class="fav-container">
+      <span
+        class="fav"
+        value="<%=blogData._id %>"
+        ><%if(typeof faved !== 'undefined'){%> <%if(faved){%>
+        <i class="bi fav-icon fs-4 bi-bookmark-heart-fill text-warning"></i>
+        <%}else{%>
+        <i class="bi fav-icon fs-4 bi-bookmark-heart"></i>
+        <%} %> <%}else{%>
+        <i class="bi fav-icon fs-4 bi-bookmark-heart"></i><% } %>
+      </span>
+    </div>
+  </div>
   <section class="single-post-content">
     <div class="container">
       <div class="row">
@@ -9,151 +37,125 @@ d Header -->
           data-aos="fade-up"
         >
           <!-- ======= Single Post Content ======= -->
-          <div class="single-post">
-            <div class="post-meta">
-              <span class="date"><%=slicedContent.category%> </span>
-              <span class="mx-1">&bullet;</span>
-              <span
-                ><%=slicedContent.createdAt.getDate()%>/
-                <%=slicedContent.createdAt.getMonth() %>
-              </span>
-            </div>
-            <h1 class="mb-5"><%=slicedContent.title%></h1>
-            <p>
-              <span class="firstcharacter"
-                ><%=slicedContent.firstcharacter%></span
-              ><%=slicedContent.p1%>
-            </p>
-            <% if(typeof slicedContent.blog_img[0] !== 'undefined'){%>
-            <figure class="my-4">
-              <img
-                src="data:<%=slicedContent.blog_img[0].contentType%>;base64,<%=slicedContent.blog_img[0].imageBase64%>"
-                alt=""
-                class="img-fluid"
-              />
-            </figure>
-            <%} %>
-
-            <p><%=slicedContent.p2%></p>
-            <p><%=slicedContent.p3%></p>
-            <p><%=slicedContent.p4%></p>
-            <p><%=slicedContent.p5%></p>
-
-            <% if(typeof slicedContent.blog_img[1] !== 'undefined'){%>
-            <figure class="my-4">
-              <img
-                src="data:<%=slicedContent.blog_img[1].contentType%>;base64,<%=slicedContent.blog_img[1].imageBase64%>"
-                alt=""
-                class="img-fluid"
-              />
-            </figure>
-            <%} %>
-            <p><%=slicedContent.p6%></p>
-            <p><%=slicedContent.p7%></p>
-            <p><%=slicedContent.p8%></p>
-            <p><%=slicedContent.p9%></p>
-            <p><%=slicedContent.p10%></p>
-            <div class="row">
-              <div class="col-3">
+          <div class="rounded single-post">
+            <div
+              class="p-3 mb-4"
+              style="word-break: keep-all"
+            >
+              <div class="post-meta">
+                <span class="date"><%=blogData.category%> </span>
+                <span class="mx-1">&bullet;</span>
                 <span
-                  value="<%=slicedContent._id%>"
-                  class="likes"
-                  ><% if(typeof liked!=='undefined'){%><% if(liked){%><i
-                    class="like-icon bi fs-4 bi-heart-fill text-danger"
-                  ></i
-                  ><%}else{%><i class="like-icon bi fs-4 bi-heart"></i><%} %>
-                  <%}else{%><i class="like-icon bi fs-4 bi-heart"></i><%} %>
-                  &#160;<small class="likes-count"
-                    ><%=slicedContent.like.length%></small
-                  ></span
-                >
-              </div>
-              <div class="col-3">
-                <span
-                  class="fav"
-                  value="<%=slicedContent._id %>"
-                  ><%if(typeof faved !== 'undefined'){%> <%if(faved){%>
-                  <i
-                    class="bi fav-icon fs-4 bi-bookmark-heart-fill text-warning"
-                  ></i>
-                  <%}else{%>
-                  <i class="bi fav-icon fs-4 bi-bookmark-heart"></i>
-                  <%} %> <%}else{%>
-                  <i class="bi fav-icon fs-4 bi-bookmark-heart"></i><% } %>
+                  ><%=blogData.createdAt.getDate()%>/
+                  <%=blogData.createdAt.getMonth() %>
                 </span>
               </div>
+              <% if(typeof blogData.coverImage !== 'undefined'){%>
+              <img
+                src="<%=blogData.coverImage%>"
+                alt=""
+                class="img-fluid cover-img"
+              />
+              <%} %>
+              <h1 class="mb-3 read-title"><%=blogData.title%></h1>
+              <div class="d-flex gap-3">
+                <span
+                  id="reading-time"
+                  class="font-tertiary color-secondary-dark"
+                ></span>
+                <span class="mx-1">&bullet;</span>
+                <span class="font-tertiary color-secondary-dark"
+                  >#<%=blogData.category%></span
+                >
+              </div>
+            </div>
+
+            <div
+              class="blog-content"
+              id="blog-content"
+            >
+              <%-blogData.content%>
             </div>
           </div>
           <!-- End Single Post Content -->
         </div>
         <div
-          class="col-md-3"
+          class="col-md-3 p-5 p-md-auto"
           style="flex-flow: column; overflow-y: auto"
         >
-          <div class="aside-block">
-            <h3 class="aside-title">Video</h3>
-            <div class="video-post">
-              <a
-                href="https://youtu.be/a6VVrAZUnsc"
-                class="glightbox link-video"
-              >
-                <span class="bi-play-fill"></span>
-                <img
-                  src="/assets/img/post-landscape-5.jpg"
-                  alt=""
-                  class="img-fluid"
-                />
-              </a>
-            </div>
-          </div>
-          <!-- End Video -->
-
           <div class="aside-block">
             <h3 class="aside-title">Categories</h3>
             <ul class="aside-links list-unstyled">
               <li>
-                <a href="/category/travel"
-                  ><i class="bi bi-chevron-right"></i> Travel</a
+                <a
+                  href="/category/travel"
+                  class="ms-3"
+                >
+                  Travel</a
                 >
               </li>
               <li>
-                <a href="/category/culture"
-                  ><i class="bi bi-chevron-right"></i> Culture</a
+                <a
+                  href="/category/culture"
+                  class="ms-3"
+                >
+                  Culture</a
                 >
               </li>
               <li>
-                <a href="/category/sport"
-                  ><i class="bi bi-chevron-right"></i> Sport</a
+                <a
+                  href="/category/sport"
+                  class="ms-3"
+                >
+                  Sport</a
                 >
               </li>
               <li>
-                <a href="/category/food"
-                  ><i class="bi bi-chevron-right"></i> Food</a
+                <a
+                  href="/category/food"
+                  class="ms-3"
+                >
+                  Food</a
                 >
               </li>
               <li>
-                <a href="/category/space"
-                  ><i class="bi bi-chevron-right"></i> Space</a
+                <a
+                  href="/category/space"
+                  class="ms-3"
+                >
+                  Space</a
                 >
               </li>
               <li>
-                <a href="/category/cars"
-                  ><i class="bi bi-chevron-right"></i> Cars</a
+                <a
+                  href="/category/cars"
+                  class="ms-3"
+                >
+                  Cars</a
                 >
               </li>
               <li>
-                <a href="/category/startups"
-                  ><i class="bi bi-chevron-right"></i> Startups</a
+                <a
+                  href="/category/startups"
+                  class="ms-3"
+                >
+                  Startups</a
                 >
               </li>
               <li>
-                <a href="/category/tech"
-                  ><i class="bi bi-chevron-right"></i> Tech</a
+                <a
+                  href="/category/tech"
+                  class="ms-3"
+                >
+                  Tech</a
                 >
               </li>
               <li>
-                <a href="/category/global"
-                  ><i class="bi bi-chevron-right"></i> Global</a
+                <a
+                  href="/category/global"
+                  class="ms-3"
+                >
+                  Global</a
                 >
               </li>
             </ul>
@@ -178,4 +180,18 @@ d Header -->
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"
 ></script>
-<script></script>
+<script>
+  $(document).ready(() => {
+    // Get the article content
+    const articleContent = $('#blog-content').text();
+
+    // Calculate the word count
+    const wordCount = articleContent.split(/\s+/).length;
+
+    // Estimate the reading time (assuming average reading speed of 200 words per minute)
+    const readingTime = Math.ceil(wordCount / 200); // Round up to the nearest whole number
+
+    // Display the reading time
+    $('#reading-time').text(readingTime + ' min read');
+  });
+</script>

@@ -31,24 +31,7 @@ module.exports = {
   },
   updateBlog: async (data, blogId) => {
     try {
-      if (data.blog_img) {
-        await BlogModel.findByIdAndUpdate(blogId, {
-          title: data.title,
-          description: data.description,
-          content: data.content,
-          category: data.category,
-          headLine: data.headLine,
-          blog_img: data.blog_img,
-        });
-        return;
-      }
-      await BlogModel.findByIdAndUpdate(blogId, {
-        title: data.title,
-        description: data.description,
-        content: data.content,
-        category: data.category,
-        headLine: data.headLine,
-      });
+      await BlogModel.findByIdAndUpdate(blogId, data);
     } catch (err) {
       const errMessage = "Oops coudn't update Blog";
       throw errMessage;
@@ -60,10 +43,10 @@ module.exports = {
     if (!blogs) throw errMessage;
     return blogs;
   },
-  findLatest: async (id) => {
-    const result = await BlogModel.find({ $nor: [{ 'author_id.id': id }] })
+  findLatest: async (limit) => {
+    const result = await BlogModel.find()
       .sort({ createdAt: -1 })
-      .limit(5)
+      .limit(limit)
       .lean();
     return result;
   },
@@ -93,12 +76,20 @@ module.exports = {
 
     return result;
   },
-  findByCategory: async (data) => {
-    if (data === 'all-blogs') {
-      const result = await BlogModel.find().lean();
+  findByCategory: async (category, limit = 10, skip = 0) => {
+    if (category === 'all-blogs') {
+      const result = await BlogModel.find()
+        .skip(skip)
+        .limit(limit)
+        .lean()
+        .sort({ createdAt: -1 });
       return result;
     }
-    const result = await BlogModel.find({ category: data });
+    const result = await BlogModel.find({ category })
+      .skip(skip)
+      .limit(limit)
+      .lean()
+      .sort({ createdAt: -1 });
     return result;
   },
   like: async (blogId, usersId) => {
@@ -137,7 +128,7 @@ module.exports = {
           title: 1,
           content: 1,
           _id: 1,
-          blog_img: 1,
+          coverImage: 1,
           author_id: 1,
           createdAt: 1,
           category: 1,

@@ -21,24 +21,22 @@
   </section>
   <section>
     <div
-      class="container"
+      class="container-fluid max-w-75"
       data-aos="fade-up"
     >
-      <div class="row">
+      <div class="masonry-grid">
         <%if(typeof blogData !== 'undefined'){%> <%
         blogData.forEach((data,index)=>{%>
-        <div class="col-lg-4 mb-5 border-start border-end custom-border">
+        <div
+          class="masonry-item"
+          style="height: fit-content"
+        >
           <div class="post-entry-1">
-            <a href="/read_blog/<%=data._id %> "
-              ><img
-                src="<%=data.blog_img[0]?data.blog_img[0]:'assets/img/post-landscape-1.jpg' %>"
-                
-                style="
-                  max-width: 100%;
-                  object-fit: contain;
-                  object-position: center;
-                "
-            /></a>
+            <a href="/read_blog/<%=data._id %> ">
+              <%if(typeof data.coverImage !== 'undefined'){%><img
+                src="<%=data.coverImage %>"
+              /><%} %></a
+            >
             <div class="post-meta">
               <span class="date"><%=data.category%> </span>
               <span class="mx-1">&bullet;</span>

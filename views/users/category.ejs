@@ -3,17 +3,25 @@
     <section>
       <div class="container" style="word-break:break-all;">
         <div class="row">
-          <div class="col-md-9" data-aos="fade-up">
+          <div class="col-md-9 " data-aos="fade-up">
+            <div class="masonry-grid">
             <h3 class="category-title">All Blogs</h3>
+      <%if (result.length == 0){%>
+    <h1 class="no-blogs">No Blogs yet</h1>
+              <%} %>
             <% result.forEach((data,index)=>{%>
-          <div class="d-md-flex post-entry-2 half border-top border-bottom custom-border ">
+          <div class="post-entry-2 half border-top border-bottom  masonry-item" style="min-height: 200px;">
+            <%if (typeof data.coverImage !== 'undefined'){%>
               <a href="/read_blog/<%=data._id%> " class="me-4 thumbnail">
-                <img <%if(typeof data.blog_img[0] !== 'undefined'){%>src="data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%>"<%}else{%>src="/assets/img/post-landscape-6.jpg"<%}%>  alt="" class="img-fluid">
+                <img src="<%=data.coverImage%>"  alt="cover image" class="img-fluid" style="max-height: 100%;">
               </a>
-              <div>
-                <div class="post-meta"><span class="date"><%=data.category%> </span> <span class="mx-1">&bullet;</span> <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()%>  </span></div>
+              <%} %>
+              <div class="d-flex flex-column justify-content-center">
+                <div>
+                  <div class="post-meta"><span class="date"><%=data.category%> </span> <span class="mx-1">&bullet;</span> <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()%>  </span></div>
                 <h3><a href="/read_blog/<%=data._id%> "><%=data.title%> </a></h3>
-                <p><%=data.content %></p>
+                </div>
+                
                 <div class="d-flex align-items-center author">
                   <div class="photo"><img src="/assets/img/person-2.jpg" alt="" class="img-fluid"></div>
                   <div class="name">
@@ -23,26 +31,15 @@
               </div>
             </div>
             <%}) %> 
-  
-            <!-- <div class="text-start py-4">
-              <div class="custom-pagination">
-                <a href="#" class="prev">Prevous</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#" class="next">Next</a>
-              </div>
-            </div> -->
           </div>
 
+          <!-- Load more button -->
+          <div class="w-100 d-flex justify-content-center py-4 mt-5 load-more-container"><button id="load-more">Load More</button></div>
+
+          </div>
           <div class="col-md-3">
             <!-- ======= Sidebar ======= -->
             <div class="aside-block">
-
-             
-
             <div class="aside-block">
               <h3 class="aside-title">Video</h3>
               <div class="video-post">

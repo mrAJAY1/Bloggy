@@ -1,3 +1,7 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"
+/>
 <main
   id="main"
   class="pb-md-5"
@@ -122,98 +126,70 @@
         </div>
       </div>
 
-      <div class="form mt-5">
-        <form
-          id="create-form"
-          action="/create_blog"
-          method="post"
-          role="form"
-          enctype="multipart/form-data"
-          class="php-email-form"
-        >
-          <div class="row">
-            <div class="form-group col-md-6">
-              <input
-                type="text"
-                name="title"
-                class="form-control"
-                id="title"
-                placeholder="Title"
-                required
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <select
-                name="category"
-                class="form-select"
-                aria-label="Default select example"
-              >
-                <option
-                  value="Global"
-                  selected
-                >
-                  Global
-                </option>
-                <option value="Cars">Cars</option>
-                <option value="space">Space</option>
-                <option value="culture">Culture</option>
-                <option value="tech">Tech</option>
-                <option value="global">Global</option>
-                <option value="Sport">Sport</option>
-                <option value="Cars">Food</option>
-                <option value="space">Startups</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              name="description"
-              id="description"
-              placeholder="Description"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <textarea
-              class="form-control"
-              name="content"
-              rows="5"
-              placeholder="Content"
-              required
-            ></textarea>
+      <form
+        class="form mt-5"
+        id="create-form"
+      >
+        <div class="border rounded p-3">
+          <button
+            type="button"
+            class="border rounded mb-2"
+            style="font-size: 0.876rem"
+            onclick="uploadCoverImage()"
+          >
+            Add Cover Image
+          </button>
+          <div id="coverContainer">
+            <p
+              id="fallback"
+              class="d-none"
+            >
+              Uploading
+            </p>
           </div>
 
-          <div class="form-group">
-            <label for="exampleFormControlFile1">Example file input</label>
-            <input
-              multiple
-              type="file"
-              maxlength="2"
-              name="blogImage"
-              accept="image/*"
-              class="form-control-file"
-              id="exampleFormControlFile1"
-            />
+          <textarea
+            type="text"
+            id="blog-title"
+            name="title"
+            placeholder="Enter your title here"
+            required
+            style="resize: none; outline: none; overflow: hidden"
+            class="w-100 fs-1 fw-bold"
+          ></textarea>
+          <div class="form-group col-md-6">
+            <select
+              name="category"
+              id="category"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option value="Cars">Cars</option>
+              <option value="space">Space</option>
+              <option value="culture">Culture</option>
+              <option value="tech">Tech</option>
+              <option value="global">Global</option>
+              <option value="Sport">Sport</option>
+              <option value="Cars">Food</option>
+              <option value="space">Startups</option>
+            </select>
           </div>
-          <div class="my-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">
-              Your Blog has been sent to Admin and it will be published once it
-              is approved . thank you!
-            </div>
-          </div>
-          <div
-            id="submit-form"
-            role="button"
-            class="text-center"
+          <input id="editor" />
+        </div>
+
+        <div
+          id="submit-form"
+          role="button"
+          class="text-center mt-5"
+        >
+          <button
+            type="submit"
+            class="border rounded py-2 px-4 color-white bg-black opacity-9"
           >
-            <button type="submit">submit</button>
-          </div>
-        </form>
-      </div>
+            submit
+          </button>
+        </div>
+      </form>
       <%} %>
     </div>
   </section>
@@ -225,9 +201,133 @@
   class="scroll-top d-flex align-items-center justify-content-center"
   ><i class="bi bi-arrow-up-short"></i
 ></a>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.6.0.js"
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"
 ></script>
-<script></script>
+<script>
+  function uploadCoverImage(e) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.addEventListener('change', function () {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('blogImage', file);
+      // inserts an img tag if it doesn't already exists inside the coverContainer
+      if (!document.querySelector('#coverContainer img')) {
+        const img = document.createElement('img');
+        img.classList.add('img-fluid');
+        $('#fallback').removeClass('d-none');
+        fetch('/upload', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(async (res) => {
+            if (res.ok) {
+              const data = await res.json();
+              img.src = data.url;
+              img.dataset.publicId = data.public_id;
+              $('#fallback').addClass('d-none');
+              document.querySelector('#coverContainer').appendChild(img);
+            }
+          })
+          .catch((err) => {
+            alert('An error has occured');
+            console.log(err);
+          })
+          .finally(() => {
+            $('#fallback').addClass('d-none');
+          });
+      } else {
+        $('#fallback').removeClass('d-none');
+        $('#coverContainer img').addClass('d-none');
+        formData.append(
+          'publicId',
+          document.querySelector('#coverContainer img').dataset.publicId
+        );
+        fetch('/reUpload', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(async (res) => {
+            if (res.ok) {
+              const data = await res.json();
+              $('#fallback').addClass('d-none');
+
+              $('#coverContainer img')
+                .attr('src', data.url)
+                .data('publicId', data.public_id)
+                .removeClass('d-none');
+            }
+          })
+          .catch((err) => {
+            alert('An error has occured');
+            console.log(err);
+          })
+          .finally(() => {
+            $('#fallback').addClass('d-none');
+          });
+      }
+    });
+    input.click();
+  }
+  // deletes the image if the user reloads or closes the page and the form is not submitted
+
+  $(window).on('beforeunload', function () {
+    if ($('#coverContainer img')) {
+      const publicId = $('#coverContainer img').data('publicId');
+      if (publicId)
+        fetch(`/deleteUpload?publicId=${publicId}`).then((res) => {
+          console.log(res.ok);
+          if (res.ok) console.log('deleted');
+        });
+    }
+  });
+  $(document).ready(function () {
+    function genUniqueId() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+        /[xy]/g,
+        function (c) {
+          var r = (Math.random() * 16) | 0,
+            v = c == 'x' ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        }
+      );
+    }
+    const editor = document.querySelector('#editor');
+    const simplemde = new SimpleMDE({
+      element: editor,
+      autoDownloadFontAwesome: true,
+      autosave: {
+        enabled: true,
+        uniqueId: genUniqueId(),
+        delay: 1000,
+      },
+    });
+    $('#create-form').on('submit', function (e) {
+      e.preventDefault();
+      const formData = {
+        title: $('#blog-title').val(),
+        content: simplemde.value(),
+        coverImage: $('#coverContainer img').attr('src'),
+        category: $('#category').val(),
+      };
+      fetch('/create_blog', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      }).then((res) => {
+        if (res.ok) {
+          const userId = '<%=userActive.id%>';
+          window.location = `/profile/${userId}`;
+        }
+      });
+    });
+  });
+</script>

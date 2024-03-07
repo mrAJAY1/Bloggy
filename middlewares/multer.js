@@ -11,6 +11,6 @@ const storage = multer.diskStorage({
     callback(null, `${file.fieldname}-${Date.now()}${ext}`);
   },
 });
-const store = multer({storage});
+const store = multer({ storage });
 
 module.exports = store;

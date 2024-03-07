@@ -12,8 +12,8 @@
               <% featured.forEach((data,index)=>{%>
               <div class="swiper-slide">
                 <a href="/read_blog/<%=data._id%> " class="img-bg d-flex align-items-end"
-                  <%if(data.blog_img[0]!=='undefined'){%>
-                  style="background-image: url('data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%>');"
+                  <%if(data.coverImage!=='undefined'){%>
+                  style="background-image: url('<%=data.coverImage%>');"
                   <%}else{%> style="background-image: url('assets/img/post-slide-1.jpg');" <%} %>>
                   <div class="img-bg-inner">
                     <h2><%=data.title %> </h2>
@@ -68,65 +68,38 @@
         <div><a href="/category/all-blogs" class="more">See All Blogs</a></div>
       </div>
       <div class="row g-5">
-        <div class="col-lg-4">
-          <% if(typeof blogPrime !== 'undefined'){%>
-          <% blogPrime.forEach((data,index)=>{%>
-          <div class="post-entry-1 lg">
-            <a href="/read_blog/<%=data._id%>"><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
-              data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
-              <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
+        <div class="col-lg-9">
+          <div class="masonry-grid masonry-index">
+          <% if(typeof blogData !== 'undefined'){%>
+          <% blogData.map((data,index)=>{%>
+            <div class="masonry-item first-item-full">
+              <div class="post-entry-1 lg">
+            <% if(typeof data.coverImage !== 'undefined'){ %>
+            <a href="/read_blog/<%=data._id%>">
+              <img loading="lazy" src="<%=data.coverImage%>" alt="cover image" class="img-fluid">
+            </a>              
+            <% } %>
             <div class="post-meta"><span class="date"><%=data.category%></span><span class="mx-1">&bullet;</span>
               <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()+1%></span>
             </div>
-            <h2><a href="/read_blog/<%=data.id%>"><%=data.title%> </a></h2>
-            <p  class="mb-4 d-block"><%=data.content%></p>
+            <h2><a href="/read_blog/<%=data._id%>"><%=data.title%> </a></h2>
+            <p  class="mb-4 d-block color-green">#<%=data.category%></p>
             <div class="d-flex align-items-center author mb-3">
-              <div class="photo"><img src="assets/img/person-1.jpg" alt="" class="img-fluid"></div>
+              <div class="photo"><img loading="lazy" src="assets/img/person-1.jpg" alt="" class="img-fluid"></div>
               <div class="name">
                 <h3 class="m-0 p-0"><%=data.author_id.username%> </h3>
               </div>
             </div>
-            
           </div>
+        </div>
           <%}) %>
           <%} %>
         </div>
+          <div class="w-100 d-flex justify-content-center py-4 mt-5 load-more-container"><button id="load-more">Load More</button></div>
 
-        <div class="col-lg-8">
-          <div class="row g-5">
-            <div class="col-lg-4 border-start custom-border">
-              <% if(typeof blogSecond !== 'undefined'){%>
-              <%blogSecond.forEach((data,index)=>{%>
-              <div class="post-entry-1 mb-5">
-                <a href="/read_blog/<%=data._id%> "><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
-                  data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
-                  <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
-                <div class="post-meta"><span class="date"><%=data.category%></span> <span class="mx-1">&bullet;</span>
-                  <span><%=data.createdAt.getDate()%>/ <%=data.createdAt.getMonth()+1%></span>
-                </div>
-                <h2><a href="single-post.html"><%=data.title%></a></h2>
-              </div>
-              <%}) %>
-              <%} %>
-            </div>
-            <div class="col-lg-4 border-start custom-border">
-              <% if(typeof blogThird !== 'undefined'){%>
-              <%blogThird.forEach((data,index)=>{%>
-              <div class="post-entry-1 mb-5">
-                <a href="/read_blog/<%=data._id%> "><img src="<% if(typeof data.blog_img[0] !== 'undefined'){%>
-                    data:<%=data.blog_img[0].contentType%>;base64,<%=data.blog_img[0].imageBase64%> 
-                    <%}else{%>assets/img/post-landscape-1.jpg<%} %>" alt="" class="img-fluid"></a>
-                <div class="post-meta"><span class="date"><%=data.category%></span> <span class="mx-1">&bullet;</span>
-                  <span><%=data.createdAt.getDate()%>/<%=data.createdAt.getMonth()+1%></span>
-                </div>
-                <h2><a href="single-post.html"><%=data.title%> </a></h2>
-              </div>
-              <%}) %>
-              <%} %>
-            </div>
-
+        </div>
+        <div class="col-lg-3 border-start custom-border">
             <!-- Trending Section -->
-            <div class="col-lg-4" style="flex-flow: column;overflow-y:auto">
               <div class="trending">
                 <h3>Trending</h3>
                 <ul class="trending-post">
@@ -142,9 +115,6 @@
                   <%}) %>
                   <%} %>
                 </ul>
-              </div>
-            </div> <!-- End Trending Section -->
-          </div>
         </div>
       </div> <!-- End .row -->
     </div>

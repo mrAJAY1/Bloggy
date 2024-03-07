@@ -66,12 +66,6 @@ const blogSchema = new mongoose.Schema(
     title: {
       type: String,
     },
-    headLine: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
     category: {
       type: String,
       lowercase: true,
@@ -98,10 +92,7 @@ const blogSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // array of strings
-    blog_img: {
-      type: [String],
-    },
+    coverImg: { type: String },
   },
   { timestamps: true }
 );

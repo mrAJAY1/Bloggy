@@ -152,8 +152,10 @@
             <div class="row d-flex m-0">
               <div style=" height: 300px;width: 40%; padding: 0; overflow: hidden;">
                 <div class="" style="height: 100%; width:100%;">
-                  <img class="card-img" <% data.blog_img[0] && src="<%=data.blog_img[0]%>" %>
-                        class="rounded-start" alt=".image" />
+                  <% data.coverImage && 
+                  <img class="card-img" src="<%=data.coverImage%>"
+                        class="rounded-start" alt="cover image" />
+                         %>
 
                 </div>
               </div>
