@@ -14,8 +14,7 @@ const mongoose = require('mongoose');
 
 const db = mongoose.connection;
 
-mongoose.connect(process.env.DB_URL
-);
+mongoose.connect(process.env.DB_URL);
 
 // eslint-disable-next-line no-console
 db.on('error', console.error.bind('MongoDB connection error:'));

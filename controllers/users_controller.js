@@ -14,7 +14,7 @@ module.exports = {
       username: user.username,
       id: user._id,
     };
-    const result = await blogHelper.findLatest(7);
+    const result = await blogHelper.findLatest(10);
     const featured = await blogHelper.findFeatured();
     const trending = await blogHelper.findTrending();
     // eslint-disable-next-line no-param-reassign
