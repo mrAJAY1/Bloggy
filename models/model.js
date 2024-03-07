@@ -92,7 +92,7 @@ const blogSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    coverImg: { type: String },
+    coverImage: { type: String },
   },
   { timestamps: true }
 );

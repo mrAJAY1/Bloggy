@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
+const Showdown = require('showdown');
 const userHelper = require('../helpers/user_helper');
 const blogHelper = require('../helpers/blog_helper');
-const Showdown = require('showdown');
 
 const access = 1;
 let userActive;
@@ -26,11 +26,6 @@ module.exports = {
       trending,
     });
   },
-  // getCategories:async(req,res)=>{
-  //   const postData = req.body
-  //   const data = await blogHelper.getLatestcategories(postData.category)
-  //   res.send({data})
-  // },
 
   getSignup: (req, res) => {
     if (req.session.adminSignedIn) res.redirect('/admin');
@@ -150,7 +145,6 @@ module.exports = {
     if (!isBlocked) {
       const authorData = req.session.userSignedIn;
       const finalData = req.body;
-      console.log(finalData);
       finalData.author_id = {
         id: authorData._id,
         username: authorData.username,

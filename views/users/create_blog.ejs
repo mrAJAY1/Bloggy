@@ -275,9 +275,9 @@
     input.click();
   }
   // deletes the image if the user reloads or closes the page and the form is not submitted
-
+  let didFormSubmit = false;
   $(window).on('beforeunload', function () {
-    if ($('#coverContainer img')) {
+    if ($('#coverContainer img') && !didFormSubmit) {
       const publicId = $('#coverContainer img').data('publicId');
       if (publicId)
         fetch(`/deleteUpload?publicId=${publicId}`).then((res) => {
@@ -311,6 +311,7 @@
       e.preventDefault();
       const formData = {
         title: $('#blog-title').val(),
+
         content: simplemde.value(),
         coverImage: $('#coverContainer img').attr('src'),
         category: $('#category').val(),
@@ -325,6 +326,7 @@
       }).then((res) => {
         if (res.ok) {
           const userId = '<%=userActive.id%>';
+          didFormSubmit = true;
           window.location = `/profile/${userId}`;
         }
       });
