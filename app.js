@@ -14,8 +14,7 @@ const mongoose = require('mongoose');
 
 const db = mongoose.connection;
 
-mongoose.connect(
-  'mongodb+srv://bloggy:mrAJAY1@cluster0.fo34uzm.mongodb.net/bloggy?retryWrites=true&w=majority&appName=Cluster0'
+mongoose.connect(process.env.DB_URL
 );
 
 // eslint-disable-next-line no-console
